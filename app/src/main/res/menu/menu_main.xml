@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.user.proyec.MainActivity">
+
+
+    <item android:id="@+id/configu"
+        android:icon="@mipmap/config"
+        android:title="@string/configuracion"
+        android:orderInCategory="4"
+        app:showAsAction="ifRoom"/>
+    <item android:id="@+id/cora"
+        android:icon="@mipmap/corazon"
+        android:title="@string/principal"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom"/>
+    <item android:id="@+id/mensa"
+        android:icon="@mipmap/mensaje"
+        android:title="@string/enviar"
+        android:orderInCategory="3"
+        app:showAsAction="ifRoom"/>
+    <item android:id="@+id/esta"
+        android:icon="@mipmap/estad"
+        android:title="@string/estadisticas"
+        android:orderInCategory="2"
+        app:showAsAction="ifRoom"/>
+
+</menu>

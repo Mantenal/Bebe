@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">SIMON</string>
+    <string name="action_settings">Settings</string>
+    <string name="ppm">Ppm</string>
+    <string name="todo">todo</string>
+    <string name="posicion">posicion</string>
+    <string name="temperatura">temperatura</string>
+    <string name="Temperatura">Temperatura</string>
+    <string name="Posicion">Posicion</string>
+    <string name="add">add</string>
+    <string name="search">search</string>
+    <string name="edit">edit</string>
+    <string name="delete">delete</string>
+    <string name="configuracion">Configuracion</string>
+    <string name="principal">Principal</string>
+    <string name="enviar">Enviar</string>
+    <string name="estadisticas">Estadisticas</string>
+    <string name="title_activity_config">SIMON</string>
+    <string name="title_activity_estad">SIMON</string>
+    <string name="notificacion_de_sue_o">Notificacion de Sueño</string>
+    <string name="nombre">Nombre:</string>
+    <string name="sexo">Sexo:</string>
+    <string name="fecha_de_nacimiento">Fecha de Nacimiento:</string>
+    <string name="peso">Peso:</string>
+    <string name="notificacion_de_ruido">Notificacion de Ruido</string>
+    <string name="valores_predefinidos">Valores Predefinidos</string>
+    <string name="ritmo_cardiaco">Ritmo Cardiaco</string>
+    <string name="temperatura2">Temperatura</string>
+    <string name="title_activity_red">Red</string>
+    <string name="temperatura_promedio">Temperatura Promedio:</string>
+    <string name="tiempo_de_sue_o">Tiempo de Sueño:</string>
+    <string name="numero_de_alarmas">Numero de Alarmas:</string>
+    <string name="todo2">TODO</string>
+    <string name="todo1">TODO</string>
+
+    <string-array name="genero">
+        <item>Masculino</item>
+        <item>Femenino</item>
+        <item>Otro...</item>
+    </string-array>
+
+</resources>

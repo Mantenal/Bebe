@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#9d7dff</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#9d7dff</color>
+    <color name="title_activity_config">#dedcdc</color>
+    <color name="title_activity_estad">#dedcdc</color>
+    <color name="app_name">#dedcdc</color>
+    <color name="editText2">#de8c8a8a</color>
+</resources>
