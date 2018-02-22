@@ -33,6 +33,7 @@
     <string name="todo2">TODO</string>
     <string name="todo1">TODO</string>
 
+
     <string-array name="genero">
         <item>Masculino</item>
         <item>Femenino</item>

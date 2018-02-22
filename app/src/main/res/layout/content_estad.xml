@@ -10,13 +10,82 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="24dp"
+        android:layout_width="141dp"
+        android:layout_height="134dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
         android:contentDescription="@string/todo2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@mipmap/star" />
+
+    <EditText
+        android:id="@+id/Text_Sueño"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:labelFor="@+id/Text_Sueño"
+        app:layout_constraintBottom_toTopOf="@+id/Text_Alarm"
+        app:layout_constraintEnd_toEndOf="@+id/Text_Prom_Temp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/Text_Prom_Temp" />
+
+    <EditText
+        android:id="@+id/Text_Prom_Temp"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="32dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:labelFor="@+id/Text_Prom_Temp"
+        app:layout_constraintBottom_toTopOf="@+id/Text_Sueño"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textView5" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="32dp"
+        android:text="@string/temperatura_promedio"
+        app:layout_constraintBottom_toBottomOf="@+id/Text_Prom_Temp"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/tiempo_de_sue_o"
+        app:layout_constraintBottom_toBottomOf="@+id/Text_Sueño"
+        app:layout_constraintStart_toStartOf="@+id/textView5" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/numero_de_alarmas"
+        app:layout_constraintBottom_toBottomOf="@+id/Text_Alarm"
+        app:layout_constraintStart_toStartOf="@+id/textView14" />
+
+    <EditText
+        android:id="@+id/Text_Alarm"
+        android:layout_width="0dp"
+        android:layout_height="29dp"
+        android:layout_marginBottom="25dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:labelFor="@+id/Text_Alarm"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="@+id/Text_Sueño"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/Text_Sueño" />
 
 </android.support.constraint.ConstraintLayout>
