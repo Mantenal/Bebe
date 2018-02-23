@@ -31,7 +31,18 @@
     <string name="tiempo_de_sue_o">Tiempo de Sueño:</string>
     <string name="numero_de_alarmas">Numero de Alarmas:</string>
     <string name="todo2">TODO</string>
+
     <string name="todo1">TODO</string>
+    <string name="red_wi_fi">Red WI-FI:</string>
+    <string name="online">Online</string>
+    <string name="conectar">Conectar</string>
+    <string name="conexion_directa_ingresa_a_la_red_wi_fi_generada_por_el_dispositivo_usuario_contrase_a_conexion_online_previamente_se_debe_de_estar_conectado_directamente_al_dispositivo_ingrese_los_datos_que_se_le_solicita_para_establecer_conexion_a_su_red">Conexion Directa: Ingresa a la red WI-FI Generada por el dispositivo (Usuario/Contraseña) Conexion Online: Previamente se debe de estar conectado directamente al dispositivo, ingrese los datos que se le solicita para establecer conexion a su Red</string>
+    <string name="contrase_a">Contraseña</string>
+    <string name="Nombre" />
+    <string name="Fecha">DD/MM/AA</string>
+    <string name="red">Red</string>
+    <string name="restaurar">Restaurar</string>
+    <string name="guardar">Guardar</string>
 
 
     <string-array name="genero">
