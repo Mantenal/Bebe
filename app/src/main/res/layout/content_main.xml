@@ -41,7 +41,8 @@
         android:labelFor="@+id/campo_texto"
         app:layout_constraintBottom_toTopOf="@+id/campo_texto3"
         app:layout_constraintEnd_toEndOf="@+id/campo_texto2"
-        app:layout_constraintStart_toStartOf="@+id/campo_texto2" />
+        app:layout_constraintStart_toStartOf="@+id/campo_texto2"
+        android:focusable="false"/>
 
     <EditText
         android:id="@+id/campo_texto2"
@@ -56,7 +57,8 @@
         android:labelFor="@+id/campo_texto2"
         app:layout_constraintBottom_toTopOf="@+id/campo_texto"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView" />
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        android:focusable="false"/>
 
 
     <EditText
@@ -66,12 +68,12 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="24dp"
-
         android:layout_marginTop="64dp"
         android:inputType=""
         android:labelFor="@+id/campo_texto4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        android:focusable="false"/>
 
 
     <EditText
@@ -85,7 +87,8 @@
         android:labelFor="@+id/campo_texto3"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="@+id/campo_texto"
-        app:layout_constraintStart_toStartOf="@+id/campo_texto" />
+        app:layout_constraintStart_toStartOf="@+id/campo_texto"
+        android:focusable="false"/>
 
 
     <TextView
@@ -95,7 +98,8 @@
         android:layout_marginStart="16dp"
         android:text="@string/ppm"
         app:layout_constraintBottom_toBottomOf="@+id/campo_texto4"
-        app:layout_constraintStart_toEndOf="@+id/campo_texto4" />
+        app:layout_constraintStart_toEndOf="@+id/campo_texto4"
+        android:focusable="false"/>
 
     <ImageView
         android:id="@+id/imageView"

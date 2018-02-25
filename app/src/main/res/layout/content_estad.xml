@@ -31,7 +31,8 @@
         app:layout_constraintBottom_toTopOf="@+id/Text_Alarm"
         app:layout_constraintEnd_toEndOf="@+id/Text_Prom_Temp"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/Text_Prom_Temp" />
+        app:layout_constraintStart_toStartOf="@+id/Text_Prom_Temp"
+        android:focusable="false"/>
 
     <EditText
         android:id="@+id/Text_Prom_Temp"
@@ -47,7 +48,8 @@
         app:layout_constraintBottom_toTopOf="@+id/Text_Sueño"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView5" />
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        android:focusable="false"/>
 
     <TextView
         android:id="@+id/textView5"
@@ -89,6 +91,7 @@
         app:layout_constraintBottom_toTopOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="@+id/Text_Sueño"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/Text_Sueño" />
+        app:layout_constraintStart_toStartOf="@+id/Text_Sueño"
+        android:focusable="false"/>
 
 </android.support.constraint.ConstraintLayout>
