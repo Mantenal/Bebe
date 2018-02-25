@@ -20,9 +20,6 @@
     <string name="notificacion_de_sue_o">Notificacion de Sueño</string>
     <string name="nombre">Nombre:</string>
     <string name="sexo">Sexo:</string>
-    <string name="fecha_de_nacimiento">Fecha de Nacimiento:</string>
-    <string name="peso">Peso:</string>
-    <string name="notificacion_de_ruido">Notificacion de Ruido</string>
     <string name="valores_predefinidos">Valores Predefinidos</string>
     <string name="ritmo_cardiaco">Ritmo Cardiaco</string>
     <string name="temperatura2">Temperatura</string>
@@ -31,7 +28,6 @@
     <string name="tiempo_de_sue_o">Tiempo de Sueño:</string>
     <string name="numero_de_alarmas">Numero de Alarmas:</string>
     <string name="todo2">TODO</string>
-
     <string name="todo1">TODO</string>
     <string name="red_wi_fi">Red WI-FI:</string>
     <string name="online">Online</string>
@@ -43,8 +39,14 @@
     <string name="red">Red</string>
     <string name="restaurar">Restaurar</string>
     <string name="guardar">Guardar</string>
-
-
+    <string name="guardar1">GUARDAR</string>
+    <string name="restaurar1">RESTAURAR</string>
+    <string name="red3">RED</string>
+    <string name="notificacion_de_ruido">Notificacion de Ruido</string>
+    <string name="temperatura1">Temperatura</string>
+    <string name="ridmo_cardiaco">Ridmo Cardiaco</string>
+    <string name="fecha_de_nacimiento">Fecha de Nacimiento:</string>
+    <string name="peso">Peso:</string>
     <string-array name="genero">
         <item>Masculino</item>
         <item>Femenino</item>
