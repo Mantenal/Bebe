@@ -64,9 +64,9 @@
     <TextView
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="17dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/tiempo_de_sue_o"
+        android:text="PPM Promedio"
         app:layout_constraintBottom_toBottomOf="@+id/Text_Sueño"
         app:layout_constraintStart_toStartOf="@+id/textView5" />
 

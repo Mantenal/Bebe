@@ -47,6 +47,7 @@
     <string name="ridmo_cardiaco">Ridmo Cardiaco</string>
     <string name="fecha_de_nacimiento">Fecha de Nacimiento:</string>
     <string name="peso">Peso:</string>
+    <string name="valores_personalizados">Valores Personalizados</string>
     <string-array name="genero">
         <item>Masculino</item>
         <item>Femenino</item>

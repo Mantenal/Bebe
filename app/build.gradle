@@ -6,9 +6,9 @@ android {
         applicationId "com.example.user.proyec"
         minSdkVersion 22
         targetSdkVersion 22
-
-        versionName "2.0"
+        versionName '2.1'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionCode 3
     }
     buildTypes {
         release {

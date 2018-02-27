@@ -107,7 +107,7 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/valores_predefinidos"
+        android:text="@string/valores_personalizados"
         app:layout_constraintBottom_toBottomOf="@+id/switch8"
         app:layout_constraintStart_toStartOf="@+id/textView9" />
 
@@ -195,6 +195,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:onClick="onclick"
         app:layout_constraintEnd_toEndOf="@+id/switch5"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/switch5"

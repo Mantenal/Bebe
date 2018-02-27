@@ -58,7 +58,8 @@
         app:layout_constraintBottom_toTopOf="@+id/campo_texto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView"
-        android:focusable="false"/>
+        android:focusable="false"
+        />
 
 
     <EditText
