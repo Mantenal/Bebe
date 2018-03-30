@@ -16,8 +16,13 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 
-public class config extends AppCompatActivity {
+import org.json.JSONObject;
+
+
+public class config extends AppCompatActivity implements Response.Listener<JSONObject>,Response.ErrorListener{
 
     Switch switchE;
     EditText campo1,campo2;
@@ -50,8 +55,6 @@ public class config extends AppCompatActivity {
         Intent i = new Intent(this, Red.class );
         startActivity(i);
     }
-
-
 
 
     @Override
@@ -96,5 +99,15 @@ public class config extends AppCompatActivity {
                 campo2.setCursorVisible(false);
             }
         }
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+
     }
 }
