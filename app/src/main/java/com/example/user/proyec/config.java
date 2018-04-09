@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -26,14 +27,14 @@ import org.json.JSONObject;
 
 public class config extends AppCompatActivity implements Response.Listener<JSONObject> ,Response.ErrorListener{
     Spinner spinner;
-    Switch switchE;
+    Switch switchE,notifc_sueño,notif_ruid;
     EditText edit_Temp, edit_ritmo,edit_peso,edit_naci;
     Button restaurar,guardar;
     ProgressDialog progreso;
     RequestQueue reques;
     JsonObjectRequest jsonObjectRequest;
 
-    private int ruido,sueño,per,sexo=0,bebe;
+    public int ruido,sueño,per,sexo=0,bebe;
 
 
 
@@ -89,6 +90,8 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         switchE=findViewById(R.id.val_persona);
+        notif_ruid=findViewById(R.id.notif_ruid);
+        notifc_sueño=findViewById(R.id.notifc_sueño);
         edit_Temp =findViewById(R.id.edit_Temp);
         edit_ritmo =findViewById(R.id.edit_ritmo);
         edit_peso=findViewById(R.id.edit_peso);
@@ -98,6 +101,66 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         spinner=(Spinner)findViewById(R.id.spinnerid);
         reques= Volley.newRequestQueue(getApplicationContext());
         bebe=15;
+
+        notif_ruid.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                if (b==true){
+                    ruido = 1;
+                    Toast.makeText(config.this, "Activaste la Notificación de Ruido :3", Toast.LENGTH_SHORT).show();
+
+                }
+                else{
+                    ruido = 0;
+                    Toast.makeText(config.this, "Desactivaste la Notificación de Ruido :3", Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+        });
+
+        switchE.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b==true){
+                    Toast.makeText(config.this,"Activaste la Configuración Personalizada",Toast.LENGTH_SHORT).show();
+                    per=1;
+                    edit_Temp.setEnabled(true);
+                    edit_Temp.setCursorVisible(true);
+                    edit_ritmo.setEnabled(true);
+                    edit_ritmo.setCursorVisible(true);
+
+                }
+
+                else{
+
+                    Toast.makeText(config.this,"Desactivaste la Configuración Personalizada",Toast.LENGTH_SHORT).show();
+                    per=0;
+                    edit_Temp.setEnabled(false);
+                    edit_Temp.setCursorVisible(false);
+                    edit_ritmo.setEnabled(false);
+                    edit_ritmo.setCursorVisible(false);
+
+                }
+
+            }
+        });
+
+        notifc_sueño.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b==true){
+                    sueño = 1;
+                    Toast.makeText(config.this, "Activaste la Notificación de Sueño", Toast.LENGTH_SHORT).show();
+
+                }
+                else{
+                    sueño = 0;
+                    Toast.makeText(config.this, "Desactivaste la Notificación de Sueño", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,52 +219,6 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
 
 
 
-    public void onclick2(View v){
-        if (v.getId()==R.id.notif_ruid) {
-            ruido=1;
-            Toast.makeText(config.this, "Activaste la Notificación de Ruido", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            ruido=0;
-            Toast.makeText(config.this, "Desactivaste la Notificación de Ruido", Toast.LENGTH_SHORT).show();
-
-        }
-
-    }
-
-    public void onclick3 (View v){
-        if(v.getId()==R.id.notifc_sueño) {
-            sueño=1;
-            Toast.makeText(config.this, "Activaste la Notificación de Sueño", Toast.LENGTH_SHORT).show();
-        }
-        else  {
-            sueño=0;
-            Toast.makeText(config.this, "Desactivaste la Notificación de Sueño", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-    public void onclick(View v) {
-        if (v.getId()==R.id.val_persona){
-            if(switchE.isChecked()){
-                Toast.makeText(config.this,"Activaste la Configuración Personalizada",Toast.LENGTH_SHORT).show();
-                per=1;
-                edit_Temp.setEnabled(true);
-                edit_Temp.setCursorVisible(true);
-                edit_ritmo.setEnabled(true);
-                edit_ritmo.setCursorVisible(true);
-            }
-
-            else{
-                Toast.makeText(config.this,"Desactivaste la Configuración Personalizada",Toast.LENGTH_SHORT).show();
-                per=0;
-                edit_Temp.setEnabled(false);
-                edit_Temp.setCursorVisible(false);
-                edit_ritmo.setEnabled(false);
-                edit_ritmo.setCursorVisible(false);
-            }
-        }
-    }
 
 
     private void cargarwebservice() {
