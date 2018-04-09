@@ -48,10 +48,10 @@
     <string name="fecha_de_nacimiento">Fecha de Nacimiento:</string>
     <string name="peso">Peso:</string>
     <string name="valores_personalizados">Valores Personalizados</string>
+    <string name="posici_n">Posición</string>
     <string-array name="genero">
         <item>Masculino</item>
         <item>Femenino</item>
-        <item>Otro...</item>
     </string-array>
 
 </resources>

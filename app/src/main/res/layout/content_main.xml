@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="@string/Posicion"
+        android:text="@string/posici_n"
         app:layout_constraintBottom_toBottomOf="@+id/campo_texto"
 
         app:layout_constraintStart_toStartOf="@+id/textView" />

@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="onclick3"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.user.proyec.config"
     tools:showIn="@layout/activity_config">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_red"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -20,60 +21,61 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_resta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/restaurar1"
-        app:layout_constraintBottom_toBottomOf="@+id/button"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
-        app:layout_constraintStart_toEndOf="@+id/button" />
+        app:layout_constraintBottom_toBottomOf="@+id/btn_red"
+        app:layout_constraintEnd_toStartOf="@+id/btn_guar"
+        app:layout_constraintStart_toEndOf="@+id/btn_red" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn_guar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/guardar1"
-        app:layout_constraintBottom_toBottomOf="@+id/button2"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_resta"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Switch
-        android:id="@+id/switch5"
+        android:id="@+id/notif_ruid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/switch6"
+        android:onClick="onclick2"
+        app:layout_constraintEnd_toEndOf="@+id/notifc_sueño"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/switch6"
-        app:layout_constraintTop_toBottomOf="@+id/switch6" />
+        app:layout_constraintStart_toStartOf="@+id/notifc_sueño"
+        app:layout_constraintTop_toBottomOf="@+id/notifc_sueño" />
 
     <Switch
-        android:id="@+id/switch6"
+        android:id="@+id/notifc_sueño"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
+        android:onClick="onclick3"
         app:layout_constraintStart_toEndOf="@+id/textView11"
-        app:layout_constraintTop_toBottomOf="@+id/editText5" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_naci" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/edit_Temp"
         android:layout_width="0dp"
-        android:labelFor="@+id/editText"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/editText5"
-        app:layout_constraintStart_toStartOf="@+id/editText5"
-        app:layout_constraintTop_toBottomOf="@+id/switch8" />
+        android:labelFor="@+id/edit_Temp"
+        app:layout_constraintEnd_toEndOf="@+id/edit_naci"
+        app:layout_constraintStart_toStartOf="@+id/edit_naci"
+        app:layout_constraintTop_toBottomOf="@+id/val_persona" />
 
     <EditText
-        android:id="@+id/editText2"
-        android:labelFor="@+id/editText2"
+        android:id="@+id/edit_peso"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -81,9 +83,10 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:labelFor="@+id/edit_peso"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerid" />
 
     <TextView
         android:id="@+id/textView4"
@@ -91,7 +94,7 @@
         android:layout_height="20dp"
         android:layout_marginBottom="8dp"
         android:text="@string/temperatura1"
-        app:layout_constraintBottom_toBottomOf="@+id/editText"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_Temp"
         app:layout_constraintStart_toStartOf="@+id/textView7" />
 
     <TextView
@@ -100,7 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="@string/ridmo_cardiaco"
-        app:layout_constraintBottom_toBottomOf="@+id/editText6"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_ritmo"
         app:layout_constraintStart_toStartOf="@+id/textView4" />
 
     <TextView
@@ -108,7 +111,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/valores_personalizados"
-        app:layout_constraintBottom_toBottomOf="@+id/switch8"
+        app:layout_constraintBottom_toBottomOf="@+id/val_persona"
         app:layout_constraintStart_toStartOf="@+id/textView9" />
 
     <TextView
@@ -116,7 +119,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/notificacion_de_ruido"
-        app:layout_constraintBottom_toBottomOf="@+id/switch5"
+        app:layout_constraintBottom_toBottomOf="@+id/notif_ruid"
         app:layout_constraintStart_toStartOf="@+id/textView11" />
 
     <TextView
@@ -126,7 +129,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="24dp"
         android:text="@string/fecha_de_nacimiento"
-        app:layout_constraintBottom_toBottomOf="@+id/editText5"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_naci"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -135,7 +138,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:text="@string/sexo"
-        app:layout_constraintBottom_toBottomOf="@+id/spinner"
+        app:layout_constraintBottom_toBottomOf="@+id/spinnerid"
         app:layout_constraintStart_toStartOf="@+id/textView12" />
 
     <TextView
@@ -144,7 +147,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text="@string/notificacion_de_sue_o"
-        app:layout_constraintBottom_toBottomOf="@+id/switch6"
+        app:layout_constraintBottom_toBottomOf="@+id/notifc_sueño"
         app:layout_constraintStart_toStartOf="@+id/textView9" />
 
     <TextView
@@ -153,53 +156,53 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="@string/peso"
-        app:layout_constraintBottom_toBottomOf="@+id/editText2"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_peso"
         app:layout_constraintStart_toStartOf="@+id/textView9" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spinnerid"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
         android:layout_marginTop="16dp"
         android:entries="@array/genero"
-        app:layout_constraintEnd_toEndOf="@+id/editText2"
+        app:layout_constraintEnd_toEndOf="@+id/edit_peso"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/edit_naci"
         android:layout_width="0dp"
-        android:labelFor="@+id/editText5"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="date"
-        app:layout_constraintEnd_toEndOf="@+id/editText2"
-        app:layout_constraintStart_toStartOf="@+id/editText2"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        android:labelFor="@+id/edit_naci"
+        app:layout_constraintEnd_toEndOf="@+id/edit_peso"
+        app:layout_constraintStart_toStartOf="@+id/edit_peso"
+        app:layout_constraintTop_toBottomOf="@+id/edit_peso" />
 
     <EditText
-        android:id="@+id/editText6"
+        android:id="@+id/edit_ritmo"
         android:layout_width="0dp"
-        android:labelFor="@+id/editText6"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/editText"
-        app:layout_constraintStart_toStartOf="@+id/editText"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        android:labelFor="@+id/edit_ritmo"
+        app:layout_constraintEnd_toEndOf="@+id/edit_Temp"
+        app:layout_constraintStart_toStartOf="@+id/edit_Temp"
+        app:layout_constraintTop_toBottomOf="@+id/edit_Temp" />
 
     <Switch
-        android:id="@+id/switch8"
+        android:id="@+id/val_persona"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:onClick="onclick"
-        app:layout_constraintEnd_toEndOf="@+id/switch5"
+        app:layout_constraintEnd_toEndOf="@+id/notif_ruid"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/switch5"
-        app:layout_constraintTop_toBottomOf="@+id/switch5" />
+        app:layout_constraintStart_toStartOf="@+id/notif_ruid"
+        app:layout_constraintTop_toBottomOf="@+id/notif_ruid" />
 
 
 </android.support.constraint.ConstraintLayout>
