@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -32,9 +33,10 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
     Button restaurar,guardar;
     ProgressDialog progreso;
     RequestQueue reques;
-    JsonObjectRequest jsonObjectRequest;
+    JsonObjectRequest jsonObjectR;
 
-    public int ruido,sueño,per,sexo=0,bebe;
+    public int ruido,sueño,per,sexo=0,bebe,id=0;
+
 
 
 
@@ -169,6 +171,14 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
             }
         });
 
+        restaurar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reiniciar();
+            }
+        });
+
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -220,20 +230,46 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
 
 
 
+    private void reiniciar(){
+
+        String url="http://simon-baby.com/bebe/borrar.php?id="+id;
+        jsonObjectR=new JsonObjectRequest(Request.Method.GET,url,null,this,this);
+        reques.add(jsonObjectR);
+
+    }
+
+
+
 
     private void cargarwebservice() {
 
-        String url="http://simon-baby.com/bebe/inicio_personalizacion.php";
+
+        String url="http://simon-baby.com/bebe/actu_bebe.php?id="+id+"&n_nacimiento="+edit_naci.getText().toString()+"&peso="+edit_peso.getText().toString()+"&sexo="+sexo;
+        jsonObjectR=new JsonObjectRequest(Request.Method.GET,url,null,this,this);
+        reques.add(jsonObjectR);
+        if (per==1){
+
+            String url2="http://simon-baby.com/bebe/actu_config.php?id="+id+"&ritmo_c_max="+edit_ritmo.getText().toString()+"&ritmo_c_min="+edit_Temp.getText().toString()+"&notificacion_s="+sueño+"&notificacion_r="+ruido;
+            jsonObjectR=new JsonObjectRequest(Request.Method.GET,url2,null,this,this);
+            reques.add(jsonObjectR);
+            Toast.makeText(getBaseContext(),"pos si",Toast.LENGTH_SHORT).show();
+        }
     }
 
 
     @Override
     public void onErrorResponse(VolleyError error) {
 
+        Toast.makeText(getBaseContext(),"Error al Actualizar",Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
     public void onResponse(JSONObject response) {
+
+        Toast.makeText(getBaseContext(),"Actualizacion Correcta",Toast.LENGTH_SHORT).show();
+
+
 
     }
 }
