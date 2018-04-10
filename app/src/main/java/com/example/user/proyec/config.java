@@ -1,6 +1,8 @@
 package com.example.user.proyec;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -104,6 +106,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         reques= Volley.newRequestQueue(getApplicationContext());
         bebe=15;
 
+
         notif_ruid.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -167,14 +170,14 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cargarwebservice();
+                confirmar_carga();
             }
         });
 
         restaurar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                reiniciar();
+                confirmar_reiniciar();
             }
         });
 
@@ -228,7 +231,53 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
     }
 
 
+   private void confirmar_reiniciar(){
 
+       AlertDialog.Builder dialogo=new AlertDialog.Builder(this);
+       dialogo.setTitle("Reiniciar");
+       dialogo.setMessage("¿Estas seguro de reiniciar todos  tus datos?");
+       dialogo.setCancelable(false);
+       dialogo.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+           @Override
+           public void onClick(DialogInterface dialogInterface, int i) {
+
+             seguro();
+
+           }
+       });
+       dialogo.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+           @Override
+           public void onClick(DialogInterface dialogInterface, int i) {
+               Toast.makeText(getBaseContext(),"Cancelado",Toast.LENGTH_SHORT).show();
+           }
+       });
+       dialogo.show();
+
+    }
+
+
+    private void seguro(){
+        AlertDialog.Builder dialogo=new AlertDialog.Builder(this);
+        dialogo.setTitle("¿Seguro?");
+        dialogo.setMessage("Todos tus datos seran borrados,¿Estas seguro?");
+        dialogo.setCancelable(false);
+        dialogo.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+               reiniciar();
+
+            }
+        });
+        dialogo.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getBaseContext(),"Cancelado",Toast.LENGTH_SHORT).show();
+            }
+        });
+        dialogo.show();
+
+    }
 
     private void reiniciar(){
 
@@ -239,10 +288,32 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
     }
 
 
+    private void confirmar_carga(){
+
+        AlertDialog.Builder dialogo=new AlertDialog.Builder(this);
+        dialogo.setTitle("Guardar");
+        dialogo.setMessage("¿Estas seguro de cambiar tus configuraciones?");
+        dialogo.setCancelable(false);
+        dialogo.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                cargarwebservice();
+
+            }
+        });
+        dialogo.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getBaseContext(),"Actualizacion Cancelada",Toast.LENGTH_SHORT).show();
+            }
+        });
+        dialogo.show();
+
+    }
+
 
 
     private void cargarwebservice() {
-
 
         String url="http://simon-baby.com/bebe/actu_bebe.php?id="+id+"&n_nacimiento="+edit_naci.getText().toString()+"&peso="+edit_peso.getText().toString()+"&sexo="+sexo;
         jsonObjectR=new JsonObjectRequest(Request.Method.GET,url,null,this,this);
@@ -252,7 +323,6 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
             String url2="http://simon-baby.com/bebe/actu_config.php?id="+id+"&ritmo_c_max="+edit_ritmo.getText().toString()+"&ritmo_c_min="+edit_Temp.getText().toString()+"&notificacion_s="+sueño+"&notificacion_r="+ruido;
             jsonObjectR=new JsonObjectRequest(Request.Method.GET,url2,null,this,this);
             reques.add(jsonObjectR);
-            Toast.makeText(getBaseContext(),"pos si",Toast.LENGTH_SHORT).show();
         }
     }
 
