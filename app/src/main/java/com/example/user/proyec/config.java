@@ -1,18 +1,22 @@
 package com.example.user.proyec;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -27,6 +31,10 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+
 
 public class config extends AppCompatActivity implements Response.Listener<JSONObject> ,Response.ErrorListener{
     Spinner spinner;
@@ -37,7 +45,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
     RequestQueue reques;
     JsonObjectRequest jsonObjectR;
 
-    public int ruido,sueño,per,sexo=0,bebe,id=0;
+    public int ruido,sueño,per,sexo=0,bebe,id=0,dia,mes,año;
 
 
 
@@ -105,6 +113,19 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         spinner=(Spinner)findViewById(R.id.spinnerid);
         reques= Volley.newRequestQueue(getApplicationContext());
         bebe=15;
+        edit_naci.setInputType(InputType.TYPE_NULL);
+
+
+        edit_naci.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b){
+
+              fecha();
+                }
+
+            }
+        });
 
 
         notif_ruid.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -113,12 +134,12 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
 
                 if (b==true){
                     ruido = 1;
-                    Toast.makeText(config.this, "Activaste la Notificación de Ruido :3", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(config.this, "Activaste la Notificación de Ruido", Toast.LENGTH_SHORT).show();
 
                 }
                 else{
                     ruido = 0;
-                    Toast.makeText(config.this, "Desactivaste la Notificación de Ruido :3", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(config.this, "Desactivaste la Notificación de Ruido", Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -185,20 +206,17 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(adapterView.getContext(),"Seleccionado: " +adapterView.getItemAtPosition(i).toString(),Toast.LENGTH_SHORT).show();
                 String selec;
                 selec=adapterView.getItemAtPosition(i).toString();
 
                  switch (selec){
 
                      case "Femenino":
-
                          sexo=0;
-                         Toast.makeText(config.this,"El id es "+sexo,Toast.LENGTH_SHORT).show();
+
                          break;
                      case "Masculino":
                          sexo=1;
-                         Toast.makeText(config.this,"El id es "+ sexo,Toast.LENGTH_SHORT).show();
                          break;
                          default:
                              break;
@@ -228,6 +246,25 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
             edit_ritmo.setEnabled(false);
             edit_ritmo.setCursorVisible(false);
         }
+    }
+
+
+    private void fecha(){
+
+        final Calendar c=Calendar.getInstance();
+        DatePickerDialog datePickerDialog=new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                edit_naci.setText(i+"-"+(i1+1)+"-"+i2);
+                año=i;
+                mes=i1+1;
+                dia=i2;
+
+            }
+        },dia,mes,año);
+
+        datePickerDialog.updateDate(c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
     }
 
 
