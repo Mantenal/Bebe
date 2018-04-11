@@ -16,7 +16,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="24dp"
         android:text="@string/Temperatura"
-        app:layout_constraintBottom_toBottomOf="@+id/campo_texto2"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_temp"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -25,27 +25,29 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="@string/posici_n"
-        app:layout_constraintBottom_toBottomOf="@+id/campo_texto"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_posicion"
 
         app:layout_constraintStart_toStartOf="@+id/textView" />
 
 
     <EditText
-        android:id="@+id/campo_texto"
+        android:id="@+id/edit_posicion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginBottom="32dp"
+        android:focusable="false"
         android:inputType=""
-        android:labelFor="@+id/campo_texto"
-        app:layout_constraintBottom_toTopOf="@+id/campo_texto3"
-        app:layout_constraintEnd_toEndOf="@+id/campo_texto2"
-        app:layout_constraintStart_toStartOf="@+id/campo_texto2"
-        android:focusable="false"/>
+        android:labelFor="@+id/edit_posicion"
+        android:textAlignment="viewEnd"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/edit_dor"
+        app:layout_constraintEnd_toEndOf="@+id/edit_temp"
+        app:layout_constraintStart_toStartOf="@+id/edit_temp" />
 
     <EditText
-        android:id="@+id/campo_texto2"
+        android:id="@+id/edit_temp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -53,43 +55,48 @@
         android:layout_marginBottom="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="64dp"
-        android:inputType=""
-        android:labelFor="@+id/campo_texto2"
-        app:layout_constraintBottom_toTopOf="@+id/campo_texto"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView"
         android:focusable="false"
-        />
+        android:inputType=""
+        android:labelFor="@+id/edit_temp"
+        android:textAlignment="viewEnd"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/edit_posicion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView" />
 
 
     <EditText
-        android:id="@+id/campo_texto4"
+        android:id="@+id/edit_ppm"
         android:layout_width="102dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="24dp"
         android:layout_marginTop="64dp"
+        android:focusable="false"
         android:inputType=""
-        android:labelFor="@+id/campo_texto4"
+        android:labelFor="@+id/edit_ppm"
+        android:textAlignment="viewEnd"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
-        android:focusable="false"/>
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
 
 
     <EditText
-        android:id="@+id/campo_texto3"
+        android:id="@+id/edit_dor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginBottom="64dp"
+        android:focusable="false"
         android:inputType=""
-        android:labelFor="@+id/campo_texto3"
+        android:labelFor="@+id/edit_dor"
+        android:textAlignment="viewEnd"
+        android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="@+id/campo_texto"
-        app:layout_constraintStart_toStartOf="@+id/campo_texto"
-        android:focusable="false"/>
+        app:layout_constraintEnd_toEndOf="@+id/edit_posicion"
+        app:layout_constraintStart_toStartOf="@+id/edit_posicion" />
 
 
     <TextView
@@ -98,8 +105,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="@string/ppm"
-        app:layout_constraintBottom_toBottomOf="@+id/campo_texto4"
-        app:layout_constraintStart_toEndOf="@+id/campo_texto4"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_ppm"
+        app:layout_constraintStart_toEndOf="@+id/edit_ppm"
         android:focusable="false"/>
 
     <ImageView

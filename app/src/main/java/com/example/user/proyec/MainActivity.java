@@ -14,9 +14,29 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
+import android.widget.EditText;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.user.proyec.entidades.Datos;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class MainActivity extends AppCompatActivity implements Response.Listener<JSONObject>,Response.ErrorListener{
+
+    int id=0;
+    String pos,dor;
+
+    EditText edi_temp,edi_pos,edi_sue,edi_ppm;
+    RequestQueue request;
+    JsonObjectRequest jsonObjectR;
 
 
     @Override
@@ -54,9 +74,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        edi_pos=findViewById(R.id.edit_posicion);
+        edi_ppm=findViewById(R.id.edit_ppm);
+        edi_sue=findViewById(R.id.edit_dor);
+        edi_temp=findViewById(R.id.edit_temp);
+        request= Volley.newRequestQueue(getBaseContext());
+
+        cargawebservice();
+
 
         NotificationCompat.Builder mBuilder;
-
         NotificationManager notificacion=(NotificationManager)getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
 
         Intent i=new Intent(MainActivity.this,estad.class);
@@ -72,4 +99,61 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void cargawebservice(){
+        String url="http://simon-baby.com/bebe/consul_bebe.php?id="+id;
+        jsonObjectR =new  JsonObjectRequest(Request.Method.GET,url,null,this,this);
+        request.add(jsonObjectR);
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        Toast.makeText(getBaseContext(),"Error al Actualizar",Toast.LENGTH_SHORT).show();
+
+
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+       
+        Datos misdatos=new Datos();
+        JSONArray json=response.optJSONArray("actual");
+        JSONObject jsonObject=null;
+        try {
+            jsonObject=json.getJSONObject(0);
+            misdatos.setPpm2(jsonObject.optString("ritmo_c"));
+            misdatos.setDor(jsonObject.optString("e_dormir"));
+            misdatos.setPos(jsonObject.optString("posicion"));
+            misdatos.setTemp(jsonObject.optString("temperatura"));
+        } catch (JSONException e) {
+            Toast.makeText(getBaseContext(),"Error al Actualizar",Toast.LENGTH_SHORT).show();
+
+        }
+        edi_ppm.setText(misdatos.getPpm2());
+        edi_temp.setText(misdatos.getTemp());
+        pos=misdatos.getPos();
+        dor=misdatos.getDor();
+        switch (pos){
+            case "0":
+                edi_pos.setText("Boca Arriba");
+                break;
+            case "1":
+                edi_pos.setText("Boca Abajo");
+                break;
+            case "3":
+                edi_pos.setText("De Costado");
+                break;
+                default:
+                    edi_pos.setText("Sin Info");
+                    break;
+        }
+
+        if (dor=="1"){
+            edi_sue.setText("Dormido");
+        }
+        else{
+            edi_sue.setText("Despierto");
+        }
+
+
+    }
 }

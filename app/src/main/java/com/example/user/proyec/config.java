@@ -3,6 +3,7 @@ package com.example.user.proyec;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -120,6 +122,9 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
             @Override
             public void onFocusChange(View view, boolean b) {
                 if(b){
+
+                    InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(edit_naci.getWindowToken(),0);
 
               fecha();
                 }
