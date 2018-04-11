@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ClipData;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         edi_sue=findViewById(R.id.edit_dor);
         edi_temp=findViewById(R.id.edit_temp);
         request= Volley.newRequestQueue(getBaseContext());
+        time time= new time();
 
         cargawebservice();
 
@@ -96,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                 .setVibrate(new long[]{100,250,100,500})
                 .setAutoCancel(true);
         notificacion.notify(1,mBuilder.build());
+time.execute();
 
     }
 
@@ -112,9 +115,40 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
     }
 
+    public void hilo(){
+        try {
+            Thread.sleep(30000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void ejecutar(){
+        time time= new time();
+        time.execute();
+
+    }
+
+    public class  time extends AsyncTask<Void,Integer,Boolean>{
+
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            hilo();
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            cargawebservice();
+            ejecutar();
+
+        }
+    }
+
     @Override
     public void onResponse(JSONObject response) {
-       
+
         Datos misdatos=new Datos();
         JSONArray json=response.optJSONArray("actual");
         JSONObject jsonObject=null;
