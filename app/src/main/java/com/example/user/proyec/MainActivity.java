@@ -80,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         edi_sue=findViewById(R.id.edit_dor);
         edi_temp=findViewById(R.id.edit_temp);
         request= Volley.newRequestQueue(getBaseContext());
+        Conexion_base conn=new Conexion_base(this,"bd",null,1);
+
         time time= new time();
 
         cargawebservice();
