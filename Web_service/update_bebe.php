@@ -6,15 +6,16 @@ $password_localhost="Mantenal_root";
 
 $json=array();
 
-	if(isset($_GET["id"])&& isset($_GET["n_nacimiento"]) && isset($_GET["peso"]) && isset($_GET["sexo"]) ){
+	if(isset($_GET["id"])&& isset($_GET["n_nacimiento"]) && isset($_GET["peso"]) && isset($_GET["sexo"]) && isset($_GET["config"]) ){
         $id=$_GET['id'];
         $n_nacimiento=$_GET['n_nacimiento'];
         $peso=$_GET['peso'];
         $sexo=$_GET['sexo'];
+        $config=$_GET['config'];
 	
 		
 	$conexion=mysqli_connect($hostname_localhost,$username_localhost,$password_localhost,$database_localhost);	
-    $insert="UPDATE bebe SET n_nacimiento='{$n_nacimiento}',peso='{$peso}',sexo='{$sexo}' WHERE id='{$id}'";
+    $insert="UPDATE bebe SET n_nacimiento='{$n_nacimiento}',peso='{$peso}',sexo='{$sexo}',config='{$config}' WHERE id='{$id}'";
 	$resultado_insert=mysqli_query($conexion,$insert);
 		
 		

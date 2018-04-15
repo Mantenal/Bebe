@@ -17,7 +17,7 @@ $json=array();
         $insert1="UPDATE actual SET id='{$id}',temperatura='0',posicion='0',e_dormir='0',ritmo_c='0',ruido='0'";
         mysqli_query($conexion,$insert1);
 		
-		$insert2="UPDATE bebe SET id='{$id}',n_nacimiento='2018-03-07',peso='0',sexo='0',ritmo_c='0',personalizacion='{$id}',actual='{$id}'";
+		$insert2="UPDATE bebe SET id='{$id}',n_nacimiento='2018-03-07',peso='0',sexo='0',ritmo_c='0',personalizacion='{$id}',actual='{$id}',config='0'";
         mysqli_query($conexion,$insert2);
 		
 		

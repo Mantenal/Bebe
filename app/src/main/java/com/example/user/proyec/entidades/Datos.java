@@ -10,10 +10,61 @@ public class Datos {
     private String nacimiento;
     private String peso;
     private String sexo;
+    private String conf;
+
+
+    private  String rimo_C;
+    private  String tempera;
+    private String not_s;
+    private String not_r;
 
 
 
 
+
+    public String getRimo_C() {
+        return rimo_C;
+    }
+
+    public void setRimo_C(String rimo_C) {
+        this.rimo_C = rimo_C;
+    }
+
+    public String getTempera() {
+        return tempera;
+    }
+
+    public void setTempera(String tempera) {
+        this.tempera = tempera;
+    }
+
+    public String getNot_s() {
+        return not_s;
+    }
+
+    public void setNot_s(String not_s) {
+        this.not_s = not_s;
+    }
+
+    public String getNot_r() {
+        return not_r;
+    }
+
+    public void setNot_r(String not_r) {
+        this.not_r = not_r;
+    }
+
+
+
+
+
+    public String getConf() {
+        return conf;
+    }
+
+    public void setConf(String conf) {
+        this.conf = conf;
+    }
 
     public String getNacimiento() {
         return nacimiento;

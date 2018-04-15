@@ -51,8 +51,8 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
     RequestQueue reques;
     JsonObjectRequest jsonObjectR;
 
-    public int ruido,sueño,per,sexo=0,bebe,id=0,dia,mes,año,actu;
-    public  String sexo_ob;
+    public int ruido,sueño,per,sexo=0,bebe,id=0,dia,mes,año,actu,val=0;
+    public  String sexo_ob,confi,sue,rui;
 
 
 
@@ -171,6 +171,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
                     edit_Temp.setCursorVisible(true);
                     edit_ritmo.setEnabled(true);
                     edit_ritmo.setCursorVisible(true);
+                    llamar_info2();
 
                 }
 
@@ -253,6 +254,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
             edit_Temp.setCursorVisible(true);
             edit_ritmo.setEnabled(true);
             edit_ritmo.setCursorVisible(true);
+            llamar_info2();
         }
 
         else{
@@ -350,6 +352,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         dialogo.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                val=1;
                 cargarwebservice();
 
             }
@@ -370,12 +373,24 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         jsonObjectR =new  JsonObjectRequest(Request.Method.GET,url,null,this,this);
         reques.add(jsonObjectR);
         actu=1;
+
+
     }
 
 
+    public void llamar_info2(){
+
+        String url="http://simon-baby.com/bebe/consul_perso.php?id="+id;
+        jsonObjectR =new  JsonObjectRequest(Request.Method.GET,url,null,this,this);
+        reques.add(jsonObjectR);
+
+
+    }
+
     private void cargarwebservice() {
 
-        String url="http://simon-baby.com/bebe/actu_bebe.php?id="+id+"&n_nacimiento="+edit_naci.getText().toString()+"&peso="+edit_peso.getText().toString()+"&sexo="+sexo;
+
+        String url="http://simon-baby.com/bebe/actu_bebe.php?id="+id+"&n_nacimiento="+edit_naci.getText().toString()+"&peso="+edit_peso.getText().toString()+"&sexo="+sexo+"&config="+per;
         jsonObjectR=new JsonObjectRequest(Request.Method.GET,url,null,this,this);
         reques.add(jsonObjectR);
         if (per==1){
@@ -414,37 +429,93 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
                 misdatos.setSexo(jsonObject.optString("sexo"));
                 misdatos.setNacimiento(jsonObject.optString("n_nacimiento"));
                 misdatos.setPeso(jsonObject.optString("peso"));
+                misdatos.setConf(jsonObject.optString("config"));
             } catch (JSONException e) {
                 Toast.makeText(getBaseContext(), "Error al Actualizar", Toast.LENGTH_SHORT).show();
             }
 
             edit_naci.setText(misdatos.getNacimiento());
             edit_peso.setText(misdatos.getPeso());
+            confi=misdatos.getConf();
             sexo_ob = misdatos.getSexo();
             if (sexo_ob == "0") {
                 spinner.setSelection(0);
             } else {
                 spinner.setSelection(1);
             }
+
+           switch (confi){
+               case "1":
+                   per=1;
+                   switchE.setChecked(true);
+                   break;
+               case "0":
+                   per=0;
+                   switchE.setChecked(false);
+                   break;
+                   default:
+                       break;
+           }
             actu=0;
         }
 
-        else {
 
-            Toast.makeText(getBaseContext(), "Actualizacion Correcta", Toast.LENGTH_SHORT).show();
-            reiniciarActivity(this);
+
+
+        if (per==1&&val==0){
+            Datos misdatos = new Datos();
+            JSONArray json = response.optJSONArray("actual");
+            JSONObject jsonObject = null;
+
+            try {
+                jsonObject = json.getJSONObject(0);
+                misdatos.setRimo_C(jsonObject.optString("ritmo_c_max"));
+                misdatos.setTempera(jsonObject.optString("ritmo_c_min"));
+                misdatos.setNot_r(jsonObject.optString("notificacion_r"));
+                misdatos.setNot_s(jsonObject.optString("notificacion_s"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            edit_ritmo.setText(misdatos.getRimo_C());
+            edit_Temp.setText(misdatos.getTempera());
+            sue=misdatos.getNot_s();
+            rui=misdatos.getNot_r();
+
+
+            switch (rui){
+                case "1":
+                    notif_ruid.setChecked(true);
+                    break;
+                case "2":
+                    notif_ruid.setChecked(false);
+                    break;
+                default:
+                    break;
+
+
+            }
+
+            switch (sue){
+                case "1":
+                    notifc_sueño.setChecked(true);
+                    break;
+                case "2":
+                    notif_ruid.setChecked(false);
+                    break;
+                default:
+                    break;
+
+
+            }
+
+
         }
 
 
 
+
+
     }
 
-    public static void reiniciarActivity(Activity actividad){
-        Intent intent=new Intent();
-        intent.setClass(actividad, actividad.getClass());
-        //llamamos a la actividad
-        actividad.startActivity(intent);
-        //finalizamos la actividad actual
-        actividad.finish();
-    }
+
 }
