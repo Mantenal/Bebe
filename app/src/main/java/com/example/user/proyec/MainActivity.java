@@ -117,36 +117,7 @@ time.execute();
 
     }
 
-    public void hilo(){
-        try {
-            Thread.sleep(30000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public void ejecutar(){
-        time time= new time();
-        time.execute();
-
-    }
-
-    public class  time extends AsyncTask<Void,Integer,Boolean>{
-
-
-        @Override
-        protected Boolean doInBackground(Void... voids) {
-            hilo();
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            cargawebservice();
-            ejecutar();
-
-        }
-    }
 
     @Override
     public void onResponse(JSONObject response) {
@@ -178,9 +149,9 @@ time.execute();
             case "3":
                 edi_pos.setText("De Costado");
                 break;
-                default:
-                    edi_pos.setText("Sin Info");
-                    break;
+            default:
+                edi_pos.setText("Sin Info");
+                break;
         }
 
         if (dor=="1"){
@@ -192,4 +163,36 @@ time.execute();
 
 
     }
+    public void hilo(){
+        try {
+            Thread.sleep(30000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void ejecutar(){
+        time time= new time();
+        time.execute();
+
+    }
+
+    public class  time extends AsyncTask<Void,Integer,Boolean>{
+
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            hilo();
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            cargawebservice();
+            ejecutar();
+
+        }
+    }
+
+
 }

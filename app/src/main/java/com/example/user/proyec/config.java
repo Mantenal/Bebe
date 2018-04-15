@@ -1,5 +1,6 @@
 package com.example.user.proyec;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -30,7 +31,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.user.proyec.entidades.Datos;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.time.LocalDateTime;
@@ -43,11 +47,12 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
     Switch switchE,notifc_sueño,notif_ruid;
     EditText edit_Temp, edit_ritmo,edit_peso,edit_naci;
     Button restaurar,guardar;
-    ProgressDialog progreso;
+
     RequestQueue reques;
     JsonObjectRequest jsonObjectR;
 
-    public int ruido,sueño,per,sexo=0,bebe,id=0,dia,mes,año;
+    public int ruido,sueño,per,sexo=0,bebe,id=0,dia,mes,año,actu;
+    public  String sexo_ob;
 
 
 
@@ -116,6 +121,11 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         reques= Volley.newRequestQueue(getApplicationContext());
         bebe=15;
         edit_naci.setInputType(InputType.TYPE_NULL);
+
+
+        llamar_info();
+
+
 
 
         edit_naci.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -212,6 +222,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String selec;
+
                 selec=adapterView.getItemAtPosition(i).toString();
 
                  switch (selec){
@@ -354,6 +365,13 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
     }
 
 
+    private void llamar_info(){
+        String url="http://simon-baby.com/bebe/consul_config.php?id="+id;
+        jsonObjectR =new  JsonObjectRequest(Request.Method.GET,url,null,this,this);
+        reques.add(jsonObjectR);
+        actu=1;
+    }
+
 
     private void cargarwebservice() {
 
@@ -374,14 +392,59 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
 
         Toast.makeText(getBaseContext(),"Error al Actualizar",Toast.LENGTH_SHORT).show();
 
+
+
     }
+
+
 
     @Override
     public void onResponse(JSONObject response) {
 
-        Toast.makeText(getBaseContext(),"Actualizacion Correcta",Toast.LENGTH_SHORT).show();
+
+        if (actu==1) {
+
+
+            Datos misdatos = new Datos();
+            JSONArray json = response.optJSONArray("actual");
+            JSONObject jsonObject = null;
+
+            try {
+                jsonObject = json.getJSONObject(0);
+                misdatos.setSexo(jsonObject.optString("sexo"));
+                misdatos.setNacimiento(jsonObject.optString("n_nacimiento"));
+                misdatos.setPeso(jsonObject.optString("peso"));
+            } catch (JSONException e) {
+                Toast.makeText(getBaseContext(), "Error al Actualizar", Toast.LENGTH_SHORT).show();
+            }
+
+            edit_naci.setText(misdatos.getNacimiento());
+            edit_peso.setText(misdatos.getPeso());
+            sexo_ob = misdatos.getSexo();
+            if (sexo_ob == "0") {
+                spinner.setSelection(0);
+            } else {
+                spinner.setSelection(1);
+            }
+            actu=0;
+        }
+
+        else {
+
+            Toast.makeText(getBaseContext(), "Actualizacion Correcta", Toast.LENGTH_SHORT).show();
+            reiniciarActivity(this);
+        }
 
 
 
+    }
+
+    public static void reiniciarActivity(Activity actividad){
+        Intent intent=new Intent();
+        intent.setClass(actividad, actividad.getClass());
+        //llamamos a la actividad
+        actividad.startActivity(intent);
+        //finalizamos la actividad actual
+        actividad.finish();
     }
 }
