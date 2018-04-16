@@ -1,6 +1,8 @@
 package com.example.user.proyec;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,8 +11,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 public class Red extends AppCompatActivity {
+
+    int id;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -51,6 +56,24 @@ public class Red extends AppCompatActivity {
         setContentView(R.layout.activity_red);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Conexion_base conn=new Conexion_base(this,"bd",null,1);
+        SQLiteDatabase db=conn.getWritableDatabase();
+
+        db.execSQL("INSERT INTO info(id)values(0)");
+        Cursor cursor=db.rawQuery("SELECT id FROM info",null);
+
+        while(cursor.moveToNext()) {
+             id = cursor.getInt(0);
+        }
+
+        cursor.close();
+
+
+        db.close();
+        Toast.makeText(getBaseContext(),"Error al Actualizar"+id,Toast.LENGTH_SHORT).show();
+
+
 
 
 

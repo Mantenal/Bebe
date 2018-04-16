@@ -7,6 +7,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -37,9 +39,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class config extends AppCompatActivity implements Response.Listener<JSONObject> ,Response.ErrorListener{
@@ -52,7 +58,8 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
     JsonObjectRequest jsonObjectR;
 
     public int ruido,sueño,per,sexo=0,bebe,id=0,dia,mes,año,actu,val=0;
-    public  String sexo_ob,confi,sue,rui;
+    public  String sexo_ob,confi,sue,rui,fecha;
+    public static int años,años2;
 
 
 
@@ -122,8 +129,17 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         bebe=15;
         edit_naci.setInputType(InputType.TYPE_NULL);
 
-
         llamar_info();
+
+
+        Conexion_base conn=new Conexion_base(this,"bd",null,1);
+        SQLiteDatabase db=conn.getWritableDatabase();
+        Cursor cursor=db.rawQuery("SELECT id FROM info",null);
+        while(cursor.moveToNext()) {
+            id = cursor.getInt(0);
+        }
+        cursor.close();
+        db.close();
 
 
 
@@ -412,6 +428,15 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
     }
 
 
+    private static int getEdad(Date fechaNacimiento, Date fechaActual) {
+        DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        int dIni = Integer.parseInt(formatter.format(fechaNacimiento));
+        int dEnd = Integer.parseInt(formatter.format(fechaActual));
+        int age = (dEnd-dIni)/10000;
+        años=age;
+        return age;
+    }
+
 
     @Override
     public void onResponse(JSONObject response) {
@@ -456,6 +481,40 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
                    default:
                        break;
            }
+
+           try{
+
+            DateFormat dateFormat = dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            fecha=misdatos.getNacimiento();
+            Date fechaNacimiento = dateFormat.parse(fecha);
+            Calendar cal = Calendar.getInstance();
+            Date fechaActual = cal.getTime();
+            getEdad(fechaNacimiento,fechaActual);
+
+
+
+
+               Conexion_base conn=new Conexion_base(this,"bd",null,1);
+               SQLiteDatabase db=conn.getWritableDatabase();
+
+               db.execSQL("INSERT INTO info(años)values("+años+")");
+               Cursor cursor=db.rawQuery("SELECT años FROM info",null);
+
+               while(cursor.moveToNext()) {
+                   años2 = cursor.getInt(0);
+               }
+
+               cursor.close();
+               db.close();
+
+
+
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
             actu=0;
         }
 
@@ -510,10 +569,6 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
 
 
         }
-
-
-
-
 
     }
 

@@ -4,6 +4,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ClipData;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -32,7 +34,7 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity implements Response.Listener<JSONObject>,Response.ErrorListener{
 
-    int id=0;
+    int id;
     String pos,dor;
 
     EditText edi_temp,edi_pos,edi_sue,edi_ppm;
@@ -80,7 +82,9 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         edi_sue=findViewById(R.id.edit_dor);
         edi_temp=findViewById(R.id.edit_temp);
         request= Volley.newRequestQueue(getBaseContext());
-        Conexion_base conn=new Conexion_base(this,"bd",null,1);
+
+
+
 
         time time= new time();
 
@@ -105,6 +109,16 @@ time.execute();
     }
 
     public void cargawebservice(){
+
+        Conexion_base conn=new Conexion_base(this,"bd",null,1);
+        SQLiteDatabase db=conn.getWritableDatabase();
+        Cursor cursor=db.rawQuery("SELECT id FROM info",null);
+        while(cursor.moveToNext()) {
+            id = cursor.getInt(0);
+        }
+        cursor.close();
+        db.close();
+
         String url="http://simon-baby.com/bebe/consul_bebe.php?id="+id;
         jsonObjectR =new  JsonObjectRequest(Request.Method.GET,url,null,this,this);
         request.add(jsonObjectR);
