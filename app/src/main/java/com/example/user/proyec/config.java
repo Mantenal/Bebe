@@ -48,27 +48,26 @@ import java.util.Date;
 import java.util.Locale;
 
 
-public class config extends AppCompatActivity implements Response.Listener<JSONObject> ,Response.ErrorListener{
+public class config extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener {
     Spinner spinner;
-    Switch switchE,notifc_sueño,notif_ruid;
+    Switch switchE, notifc_sueño, notif_ruid;
     EditText edit_Temp;
     EditText edit_ritmo;
     EditText edit_peso;
     EditText edit_naci;
-    Button restaurar,guardar;
+    Button restaurar, guardar;
 
     RequestQueue reques;
     JsonObjectRequest jsonObjectR;
 
-    public int ruido,sueño,per,sexo=0,bebe,id=0,dia,mes,año,actu,val=0;
-    public  String sexo_ob,confi,sue,rui,fecha;
-    public static int años,años2,axu=0;
-
-
+    public int ruido, sueño, per, sexo = 0, bebe, id = 0, dia, mes, año, actu, val = 0;
+    public String sexo_ob, confi, sue, rui, fecha;
+    public static int años, años2, axu = 0;
 
 
     /**
      * Esta funcion  es la encargada de generar el menu superior de la aplicacion
+     *
      * @param menu
      * @return
      */
@@ -81,6 +80,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
 
     /**
      * Funcion encargada de generar los botones de la parte superior y decirle la funcion que va a tomar
+     *
      * @param item
      * @return retorna el item que fue presionado para que se ejecute la ccion requerida
      */
@@ -89,11 +89,11 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         switch (item.getItemId()) {
 
             case R.id.esta:
-                startActivity(new Intent(getBaseContext(),estad.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                startActivity(new Intent(getBaseContext(), estad.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 return true;
 
             case R.id.cora:
-                startActivity(new Intent(getBaseContext(),MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                startActivity(new Intent(getBaseContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -103,13 +103,13 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
 
     /**
      * Esta funcion se encarga de abrir la pantalla de red cuando es presionado el boton correspondiente en la interfaz
+     *
      * @param v
      */
     public void lanzar(View v) {
-        Intent i = new Intent(this, Red.class );
+        Intent i = new Intent(this, Red.class);
         startActivity(i);
     }
-
 
 
     @Override
@@ -118,44 +118,42 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         setContentView(R.layout.activity_config);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        switchE=findViewById(R.id.val_persona);
-        notif_ruid=findViewById(R.id.notif_ruid);
-        notifc_sueño=findViewById(R.id.notifc_sueño);
-        edit_Temp =findViewById(R.id.edit_Temp);
-        edit_ritmo =findViewById(R.id.edit_ritmo);
-        edit_peso=findViewById(R.id.edit_peso);
-        edit_naci=findViewById(R.id.edit_naci);
-        restaurar=findViewById(R.id.btn_resta);
-        guardar=findViewById(R.id.btn_guar);
-        spinner=(Spinner)findViewById(R.id.spinnerid);
-        reques= Volley.newRequestQueue(getApplicationContext());
-        bebe=15;
+        switchE = findViewById(R.id.val_persona);
+        notif_ruid = findViewById(R.id.notif_ruid);
+        notifc_sueño = findViewById(R.id.notifc_sueño);
+        edit_Temp = findViewById(R.id.edit_Temp);
+        edit_ritmo = findViewById(R.id.edit_ritmo);
+        edit_peso = findViewById(R.id.edit_peso);
+        edit_naci = findViewById(R.id.edit_naci);
+        restaurar = findViewById(R.id.btn_resta);
+        guardar = findViewById(R.id.btn_guar);
+        spinner = (Spinner) findViewById(R.id.spinnerid);
+        reques = Volley.newRequestQueue(getApplicationContext());
+        bebe = 15;
         edit_naci.setInputType(InputType.TYPE_NULL);
 
         llamar_info();
 
 
-        Conexion_base conn=new Conexion_base(this,"bd",null,1);
-        SQLiteDatabase db=conn.getWritableDatabase();
-        Cursor cursor=db.rawQuery("SELECT id FROM info",null);
-        while(cursor.moveToNext()) {
+        Conexion_base conn = new Conexion_base(this, "bd", null, 1);
+        SQLiteDatabase db = conn.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT id FROM info", null);
+        while (cursor.moveToNext()) {
             id = cursor.getInt(0);
         }
         cursor.close();
         db.close();
 
 
-
-
         edit_naci.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if(b){
+                if (b) {
 
-                    InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputMethodManager.hideSoftInputFromWindow(edit_naci.getWindowToken(),0);
+                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(edit_naci.getWindowToken(), 0);
 
-              fecha();
+                    fecha();
                 }
 
             }
@@ -166,12 +164,11 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
-                if (b==true){
+                if (b == true) {
                     ruido = 1;
                     Toast.makeText(config.this, "Activaste la Notificación de Ruido", Toast.LENGTH_SHORT).show();
 
-                }
-                else{
+                } else {
                     ruido = 0;
                     Toast.makeText(config.this, "Desactivaste la Notificación de Ruido", Toast.LENGTH_SHORT).show();
 
@@ -183,21 +180,19 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         switchE.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b==true){
-                    Toast.makeText(config.this,"Activaste la Configuración Personalizada",Toast.LENGTH_SHORT).show();
-                    per=1;
+                if (b == true) {
+                    Toast.makeText(config.this, "Activaste la Configuración Personalizada", Toast.LENGTH_SHORT).show();
+                    per = 1;
                     edit_Temp.setEnabled(true);
                     edit_Temp.setCursorVisible(true);
                     edit_ritmo.setEnabled(true);
                     edit_ritmo.setCursorVisible(true);
                     llamar_info2();
 
-                }
+                } else {
 
-                else{
-
-                    Toast.makeText(config.this,"Desactivaste la Configuración Personalizada",Toast.LENGTH_SHORT).show();
-                    per=0;
+                    Toast.makeText(config.this, "Desactivaste la Configuración Personalizada", Toast.LENGTH_SHORT).show();
+                    per = 0;
                     edit_Temp.setEnabled(false);
                     edit_Temp.setCursorVisible(false);
                     edit_ritmo.setEnabled(false);
@@ -211,12 +206,11 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         notifc_sueño.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b==true){
+                if (b == true) {
                     sueño = 1;
                     Toast.makeText(config.this, "Activaste la Notificación de Sueño", Toast.LENGTH_SHORT).show();
 
-                }
-                else{
+                } else {
                     sueño = 0;
                     Toast.makeText(config.this, "Desactivaste la Notificación de Sueño", Toast.LENGTH_SHORT).show();
                 }
@@ -243,20 +237,20 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String selec;
 
-                selec=adapterView.getItemAtPosition(i).toString();
+                selec = adapterView.getItemAtPosition(i).toString();
 
-                 switch (selec){
+                switch (selec) {
 
-                     case "Femenino":
-                         sexo=0;
+                    case "Femenino":
+                        sexo = 0;
 
-                         break;
-                     case "Masculino":
-                         sexo=1;
-                         break;
-                         default:
-                             break;
-                 }
+                        break;
+                    case "Masculino":
+                        sexo = 1;
+                        break;
+                    default:
+                        break;
+                }
             }
 
 
@@ -267,17 +261,15 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         });
 
 
-        if(switchE.isChecked()){
-            per=1;
+        if (switchE.isChecked()) {
+            per = 1;
             edit_Temp.setEnabled(true);
             edit_Temp.setCursorVisible(true);
             edit_ritmo.setEnabled(true);
             edit_ritmo.setCursorVisible(true);
             llamar_info2();
-        }
-
-        else{
-            per=0;
+        } else {
+            per = 0;
             edit_Temp.setEnabled(false);
             edit_Temp.setCursorVisible(false);
             edit_ritmo.setEnabled(false);
@@ -288,52 +280,53 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
     }
 
 
-    private void fecha(){
+    private void fecha() {
 
-        final Calendar c=Calendar.getInstance();
-        DatePickerDialog datePickerDialog=new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+        final Calendar c = Calendar.getInstance();
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                edit_naci.setText(i+"-"+(i1+1)+"-"+i2);
-                año=i;
-                mes=i1+1;
-                dia=i2;
+                edit_naci.setText(i + "-" + (i1 + 1) + "-" + i2);
+                año = i;
+                mes = i1 + 1;
+                dia = i2;
 
             }
-        },dia,mes,año);
+        }, dia, mes, año);
 
-        datePickerDialog.updateDate(c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.updateDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
-    }
-
-
-   private void confirmar_reiniciar(){
-
-       AlertDialog.Builder dialogo=new AlertDialog.Builder(this);
-       dialogo.setTitle("Reiniciar");
-       dialogo.setMessage("¿Estas seguro de reiniciar todos  tus datos?");
-       dialogo.setCancelable(false);
-       dialogo.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-           @Override
-           public void onClick(DialogInterface dialogInterface, int i) {
-
-             seguro();
-
-           }
-       });
-       dialogo.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-           @Override
-           public void onClick(DialogInterface dialogInterface, int i) {
-               Toast.makeText(getBaseContext(),"Cancelado",Toast.LENGTH_SHORT).show();
-           }
-       });
-       dialogo.show();
 
     }
 
 
-    private void seguro(){
-        AlertDialog.Builder dialogo=new AlertDialog.Builder(this);
+    private void confirmar_reiniciar() {
+
+        AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
+        dialogo.setTitle("Reiniciar");
+        dialogo.setMessage("¿Estas seguro de reiniciar todos  tus datos?");
+        dialogo.setCancelable(false);
+        dialogo.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                seguro();
+
+            }
+        });
+        dialogo.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getBaseContext(), "Cancelado", Toast.LENGTH_SHORT).show();
+            }
+        });
+        dialogo.show();
+
+    }
+
+
+    private void seguro() {
+        AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
         dialogo.setTitle("¿Seguro?");
         dialogo.setMessage("Todos tus datos seran borrados,¿Estas seguro?");
         dialogo.setCancelable(false);
@@ -341,39 +334,39 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-               reiniciar();
+                reiniciar();
 
             }
         });
         dialogo.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getBaseContext(),"Cancelado",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Cancelado", Toast.LENGTH_SHORT).show();
             }
         });
         dialogo.show();
 
     }
 
-    private void reiniciar(){
+    private void reiniciar() {
 
-        String url="http://simon-baby.com/bebe/borrar.php?id="+id;
-        jsonObjectR=new JsonObjectRequest(Request.Method.GET,url,null,this,this);
+        String url = "http://simon-baby.com/bebe/borrar.php?id=" + id;
+        jsonObjectR = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         reques.add(jsonObjectR);
 
     }
 
 
-    private void confirmar_carga(){
+    private void confirmar_carga() {
 
-        AlertDialog.Builder dialogo=new AlertDialog.Builder(this);
+        AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
         dialogo.setTitle("Guardar");
         dialogo.setMessage("¿Estas seguro de cambiar tus configuraciones?");
         dialogo.setCancelable(false);
         dialogo.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                val=1;
+                val = 1;
                 cargarwebservice();
 
             }
@@ -381,7 +374,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         dialogo.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getBaseContext(),"Actualizacion Cancelada",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Actualizacion Cancelada", Toast.LENGTH_SHORT).show();
             }
         });
         dialogo.show();
@@ -389,20 +382,20 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
     }
 
 
-    private void llamar_info(){
-        String url="http://simon-baby.com/bebe/consul_config.php?id="+id;
-        jsonObjectR =new  JsonObjectRequest(Request.Method.GET,url,null,this,this);
+    private void llamar_info() {
+        String url = "http://simon-baby.com/bebe/consul_config.php?id=" + id;
+        jsonObjectR = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         reques.add(jsonObjectR);
-        actu=1;
+        actu = 1;
 
 
     }
 
 
-    public void llamar_info2(){
+    public void llamar_info2() {
 
-        String url="http://simon-baby.com/bebe/consul_perso.php?id="+id;
-        jsonObjectR =new  JsonObjectRequest(Request.Method.GET,url,null,this,this);
+        String url = "http://simon-baby.com/bebe/consul_perso.php?id=" + id;
+        jsonObjectR = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         reques.add(jsonObjectR);
 
 
@@ -411,13 +404,13 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
     private void cargarwebservice() {
 
 
-        String url="http://simon-baby.com/bebe/actu_bebe.php?id="+id+"&n_nacimiento="+edit_naci.getText().toString()+"&peso="+edit_peso.getText().toString()+"&sexo="+sexo+"&config="+per;
-        jsonObjectR=new JsonObjectRequest(Request.Method.GET,url,null,this,this);
+        String url = "http://simon-baby.com/bebe/actu_bebe.php?id=" + id + "&n_nacimiento=" + edit_naci.getText().toString() + "&peso=" + edit_peso.getText().toString() + "&sexo=" + sexo + "&config=" + per;
+        jsonObjectR = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         reques.add(jsonObjectR);
-        if (per==1){
+        if (per == 1) {
 
-            String url2="http://simon-baby.com/bebe/actu_config.php?id="+id+"&ritmo_c_max="+edit_ritmo.getText().toString()+"&ritmo_c_min="+edit_Temp.getText().toString()+"&notificacion_s="+sueño+"&notificacion_r="+ruido;
-            jsonObjectR=new JsonObjectRequest(Request.Method.GET,url2,null,this,this);
+            String url2 = "http://simon-baby.com/bebe/actu_config.php?id=" + id + "&ritmo_c_max=" + edit_ritmo.getText().toString() + "&ritmo_c_min=" + edit_Temp.getText().toString() + "&notificacion_s=" + sueño + "&notificacion_r=" + ruido;
+            jsonObjectR = new JsonObjectRequest(Request.Method.GET, url2, null, this, this);
             reques.add(jsonObjectR);
         }
     }
@@ -426,8 +419,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
     @Override
     public void onErrorResponse(VolleyError error) {
 
-        Toast.makeText(getBaseContext(),"Error al Actualizar",Toast.LENGTH_SHORT).show();
-
+        Toast.makeText(getBaseContext(), "Error al Actualizar", Toast.LENGTH_SHORT).show();
 
 
     }
@@ -437,8 +429,8 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
         int dIni = Integer.parseInt(formatter.format(fechaNacimiento));
         int dEnd = Integer.parseInt(formatter.format(fechaActual));
-        int age = (dEnd-dIni)/10000;
-        años=age;
+        int age = (dEnd - dIni) / 10000;
+        años = age;
         return age;
     }
 
@@ -447,7 +439,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
     public void onResponse(JSONObject response) {
 
 
-        if (actu==1) {
+        if (actu == 1) {
 
 
             Datos misdatos = new Datos();
@@ -466,7 +458,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
 
             edit_naci.setText(misdatos.getNacimiento());
             edit_peso.setText(misdatos.getPeso());
-            confi=misdatos.getConf();
+            confi = misdatos.getConf();
             sexo_ob = misdatos.getSexo();
             if (sexo_ob == "0") {
                 spinner.setSelection(0);
@@ -474,59 +466,55 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
                 spinner.setSelection(1);
             }
 
-           switch (confi){
-               case "1":
-                   per=1;
-                   switchE.setChecked(true);
-                   break;
-               case "0":
-                   per=0;
-                   switchE.setChecked(false);
-                   break;
-                   default:
-                       break;
-           }
+            switch (confi) {
+                case "1":
+                    per = 1;
+                    switchE.setChecked(true);
+                    break;
+                case "0":
+                    per = 0;
+                    switchE.setChecked(false);
+                    break;
+                default:
+                    break;
+            }
 
-           try{
+            try {
 
-            DateFormat dateFormat = dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            fecha=misdatos.getNacimiento();
-            Date fechaNacimiento = dateFormat.parse(fecha);
-            Calendar cal = Calendar.getInstance();
-            Date fechaActual = cal.getTime();
-            getEdad(fechaNacimiento,fechaActual);
-
-
+                DateFormat dateFormat = dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                fecha = misdatos.getNacimiento();
+                Date fechaNacimiento = dateFormat.parse(fecha);
+                Calendar cal = Calendar.getInstance();
+                Date fechaActual = cal.getTime();
+                getEdad(fechaNacimiento, fechaActual);
 
 
-               Conexion_base conn=new Conexion_base(this,"bd",null,1);
-               SQLiteDatabase db=conn.getWritableDatabase();
+                Conexion_base conn = new Conexion_base(this, "bd", null, 1);
+                SQLiteDatabase db = conn.getWritableDatabase();
 
-               db.execSQL("INSERT INTO info(años)values("+años+")");
-               Cursor cursor=db.rawQuery("SELECT años FROM info",null);
+                db.execSQL("UPDATE info SET años="+años);
 
-               while(cursor.moveToNext()) {
-                   años2 = cursor.getInt(0);
-               }
+               // db.execSQL("INSERT INTO info(años)values(" + años + ")");
+                Cursor cursor = db.rawQuery("SELECT años FROM info", null);
 
-               cursor.close();
-               db.close();
+                while (cursor.moveToNext()) {
+                    años2 = cursor.getInt(0);
+                }
+
+                cursor.close();
+                db.close();
 
 
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
 
-        } catch (ParseException e) {
-            e.printStackTrace();
+            actu = 0;
         }
 
 
-            actu=0;
-        }
-
-
-
-
-        if (per==1&&val==0){
+        if (per == 1 && val == 0) {
             Datos misdatos = new Datos();
             JSONArray json = response.optJSONArray("actual");
             JSONObject jsonObject = null;
@@ -542,20 +530,21 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
             }
 
 
-
-
             edit_ritmo.setText(misdatos.getRimo_C());
             edit_Temp.setText(misdatos.getTempera());
             axu++;
-            if (axu==2) {
-                    int ppm = 0;
-                    float tempe = 0;
+            if (axu == 2) {
+                int ppm = 0;
+                float tempe = 0;
 
 
-                Conexion_base conn=new Conexion_base(this,"bd",null,1);
-                SQLiteDatabase db=conn.getWritableDatabase();
+                Conexion_base conn = new Conexion_base(this, "bd", null, 1);
+                SQLiteDatabase db = conn.getWritableDatabase();
 
-                db.execSQL("INSERT INTO info(ppm_mx,tempe)values("+misdatos.getRimo_C()+","+misdatos.getTempera()+")");
+                db.execSQL("UPDATE info SET ppm_mx="+misdatos.getRimo_C()+",tempe="+misdatos.getTempera()+" WHERE id="+id);
+
+
+                //db.execSQL("INSERT INTO info(ppm_mx,tempe)values(" + misdatos.getRimo_C() + "," + misdatos.getTempera() + ")");
 
              /*   Cursor cursor=db.rawQuery("SELECT ppm_mx,tempe FROM info",null);
                 while(cursor.moveToNext()) {
@@ -568,11 +557,11 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
 
             }
 
-            sue=misdatos.getNot_s();
-            rui=misdatos.getNot_r();
+            sue = misdatos.getNot_s();
+            rui = misdatos.getNot_r();
 
 
-            switch (rui){
+            switch (rui) {
                 case "1":
                     notif_ruid.setChecked(true);
                     break;
@@ -585,7 +574,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
 
             }
 
-            switch (sue){
+            switch (sue) {
                 case "1":
                     notifc_sueño.setChecked(true);
                     break;

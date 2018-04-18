@@ -18,6 +18,10 @@ public class Conexion_base extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREAR_TABLA_DATOS);
         db.execSQL(CREAR_TABLA_INFO);
+        db.execSQL("INSERT INTO info(id,años,alarmas,tempe,ppm_mx,perso)values(0,0,0,0,0,0)");
+
+
+
 
     }
 

@@ -57,10 +57,10 @@ public class Red extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Conexion_base conn=new Conexion_base(this,"bd",null,1);
+       /* Conexion_base conn=new Conexion_base(this,"bd",null,1);
         SQLiteDatabase db=conn.getWritableDatabase();
 
-        db.execSQL("INSERT INTO info(id)values(0)");
+        db.execSQL("INSERT INTO info(id,años,alarmas,tempe,ppm_mx,perso)values(0,0,0,0,0,0)");
         Cursor cursor=db.rawQuery("SELECT id FROM info",null);
 
         while(cursor.moveToNext()) {
@@ -70,7 +70,7 @@ public class Red extends AppCompatActivity {
         cursor.close();
 
 
-        db.close();
+        db.close();*/
         Toast.makeText(getBaseContext(),"Error al Actualizar"+id,Toast.LENGTH_SHORT).show();
 
 
