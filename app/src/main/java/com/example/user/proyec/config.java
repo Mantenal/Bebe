@@ -51,7 +51,10 @@ import java.util.Locale;
 public class config extends AppCompatActivity implements Response.Listener<JSONObject> ,Response.ErrorListener{
     Spinner spinner;
     Switch switchE,notifc_sueño,notif_ruid;
-    EditText edit_Temp, edit_ritmo,edit_peso,edit_naci;
+    EditText edit_Temp;
+    EditText edit_ritmo;
+    EditText edit_peso;
+    EditText edit_naci;
     Button restaurar,guardar;
 
     RequestQueue reques;
@@ -59,7 +62,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
 
     public int ruido,sueño,per,sexo=0,bebe,id=0,dia,mes,año,actu,val=0;
     public  String sexo_ob,confi,sue,rui,fecha;
-    public static int años,años2;
+    public static int años,años2,axu=0;
 
 
 
@@ -280,6 +283,8 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
             edit_ritmo.setEnabled(false);
             edit_ritmo.setCursorVisible(false);
         }
+
+
     }
 
 
@@ -535,8 +540,34 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+
+
+
             edit_ritmo.setText(misdatos.getRimo_C());
             edit_Temp.setText(misdatos.getTempera());
+            axu++;
+            if (axu==2) {
+                    int ppm = 0;
+                    float tempe = 0;
+
+
+                Conexion_base conn=new Conexion_base(this,"bd",null,1);
+                SQLiteDatabase db=conn.getWritableDatabase();
+
+                db.execSQL("INSERT INTO info(ppm_mx,tempe)values("+misdatos.getRimo_C()+","+misdatos.getTempera()+")");
+
+             /*   Cursor cursor=db.rawQuery("SELECT ppm_mx,tempe FROM info",null);
+                while(cursor.moveToNext()) {
+                    ppm = cursor.getInt(0);
+                    tempe=cursor.getFloat(1);
+                }
+
+                cursor.close();*/
+                db.close();
+
+            }
+
             sue=misdatos.getNot_s();
             rui=misdatos.getNot_r();
 

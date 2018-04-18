@@ -13,7 +13,7 @@ public class Datos {
     private String conf;
 
 
-    private  String rimo_C;
+    private String rimo_C;
     private  String tempera;
     private String not_s;
     private String not_r;

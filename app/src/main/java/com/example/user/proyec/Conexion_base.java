@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class Conexion_base extends SQLiteOpenHelper{
 
     final String CREAR_TABLA_DATOS="CREATE TABLE datos(tempe FLOAT,ppm INT)";
-    final String CREAR_TABLA_INFO="CREATE TABLE info(id INT, años INT,alarmas INT)";
+    final String CREAR_TABLA_INFO="CREATE TABLE info(id INT, años INT,alarmas INT,tempe float,ppm_mx int,perso int)";
 
 
     public Conexion_base(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
