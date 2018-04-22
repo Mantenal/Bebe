@@ -187,16 +187,19 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
                     edit_Temp.setCursorVisible(true);
                     edit_ritmo.setEnabled(true);
                     edit_ritmo.setCursorVisible(true);
+                    base_config();
                     llamar_info2();
 
                 } else {
 
                     Toast.makeText(config.this, "Desactivaste la Configuración Personalizada", Toast.LENGTH_SHORT).show();
+
                     per = 0;
                     edit_Temp.setEnabled(false);
                     edit_Temp.setCursorVisible(false);
                     edit_ritmo.setEnabled(false);
                     edit_ritmo.setCursorVisible(false);
+                    base_config();
 
                 }
 
@@ -267,6 +270,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
             edit_Temp.setCursorVisible(true);
             edit_ritmo.setEnabled(true);
             edit_ritmo.setCursorVisible(true);
+            base_config();
             llamar_info2();
         } else {
             per = 0;
@@ -274,6 +278,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
             edit_Temp.setCursorVisible(false);
             edit_ritmo.setEnabled(false);
             edit_ritmo.setCursorVisible(false);
+            base_config();
         }
 
 
@@ -492,7 +497,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
                 Conexion_base conn = new Conexion_base(this, "bd", null, 1);
                 SQLiteDatabase db = conn.getWritableDatabase();
 
-                db.execSQL("UPDATE info SET años="+años);
+                db.execSQL("UPDATE info SET años="+años+" WHERE id="+id);//cosa que modifique
 
                // db.execSQL("INSERT INTO info(años)values(" + años + ")");
                 Cursor cursor = db.rawQuery("SELECT años FROM info", null);
@@ -591,6 +596,17 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         }
 
     }
+
+
+    public void base_config(){
+
+        Conexion_base conn = new Conexion_base(this, "bd", null, 1);
+        SQLiteDatabase db = conn.getWritableDatabase();
+        db.execSQL("UPDATE info  SET perso="+per+" WHERE id="+id);
+        db.close();
+
+    }
+
 
 
 }

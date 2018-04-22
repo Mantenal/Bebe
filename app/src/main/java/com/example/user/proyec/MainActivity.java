@@ -34,7 +34,7 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity implements Response.Listener<JSONObject>,Response.ErrorListener{
 
-    int id;
+    int id,datos=0;
     String pos,dor;
 
     EditText edi_temp,edi_pos,edi_sue,edi_ppm;
@@ -83,14 +83,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         edi_temp=findViewById(R.id.edit_temp);
         request= Volley.newRequestQueue(getBaseContext());
 
-
-
-
-
-
-
         time time= new time();
-
         cargawebservice();
 
 
@@ -110,6 +103,9 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 time.execute();
 
     }
+
+
+
 
     public void cargawebservice(){
 
@@ -178,8 +174,34 @@ time.execute();
             edi_sue.setText("Despierto");
         }
 
+        Conexion_base conn = new Conexion_base(this, "bd", null, 1);
+        SQLiteDatabase db = conn.getWritableDatabase();
+        db.execSQL("INSERT INTO datos(tempe,ppm) values("+misdatos.getTemp()+","+misdatos.getPpm2()+")");
+
+        Cursor cursor=db.rawQuery("SELECT count(*) FROM datos",null);
+        while(cursor.moveToNext()) {
+            datos=cursor.getInt(0);
+
+        }
+        cursor.close();
+        
+        if (datos>=500){
+            db.execSQL("Delete  From datos");
+        }
+        db.close();
+
+
+
+
+
 
     }
+
+
+
+
+
+
     public void hilo(){
         try {
             Thread.sleep(30000);
