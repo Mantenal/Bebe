@@ -86,7 +86,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-       
+
         switch (item.getItemId()) {
 
 
@@ -193,10 +193,12 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
 
                 if (b == true) {
                     ruido = 1;
+                    ruido_guar();
                     Toast.makeText(config.this, "Activaste la Notificación de Ruido", Toast.LENGTH_SHORT).show();
 
                 } else {
                     ruido = 0;
+                    ruido_guar_n();
                     Toast.makeText(config.this, "Desactivaste la Notificación de Ruido", Toast.LENGTH_SHORT).show();
 
                 }
@@ -214,6 +216,11 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
                     edit_Temp.setCursorVisible(true);
                     edit_ritmo.setEnabled(true);
                     edit_ritmo.setCursorVisible(true);
+
+                    notifc_sueño.setEnabled(true);
+                    notif_ruid.setEnabled(true);
+
+
                     base_config();
                     llamar_info2();
 
@@ -226,7 +233,16 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
                     edit_Temp.setCursorVisible(false);
                     edit_ritmo.setEnabled(false);
                     edit_ritmo.setCursorVisible(false);
+
+                    notifc_sueño.setEnabled(false);
+                    notif_ruid.setEnabled(false);
+
+
+
                     base_config();
+
+                    notif_ruid.setChecked(false);
+                    notifc_sueño.setChecked(false);
 
                 }
 
@@ -239,10 +255,12 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
                 if (b == true) {
                     sueño = 1;
                     Toast.makeText(config.this, "Activaste la Notificación de Sueño", Toast.LENGTH_SHORT).show();
+                    sue_guar();
 
                 } else {
                     sueño = 0;
                     Toast.makeText(config.this, "Desactivaste la Notificación de Sueño", Toast.LENGTH_SHORT).show();
+                    sue_guar_n();
                 }
             }
         });
@@ -297,6 +315,11 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
             edit_Temp.setCursorVisible(true);
             edit_ritmo.setEnabled(true);
             edit_ritmo.setCursorVisible(true);
+
+            notifc_sueño.setEnabled(true);
+            notif_ruid.setEnabled(true);
+
+
             base_config();
             llamar_info2();
         } else {
@@ -305,7 +328,14 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
             edit_Temp.setCursorVisible(false);
             edit_ritmo.setEnabled(false);
             edit_ritmo.setCursorVisible(false);
+
+
+            notifc_sueño.setEnabled(false);
+            notif_ruid.setEnabled(false);
             base_config();
+
+            notif_ruid.setChecked(false);
+            notifc_sueño.setChecked(false);
         }
 
 
@@ -564,6 +594,9 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
 
             edit_ritmo.setText(misdatos.getRimo_C());
             edit_Temp.setText(misdatos.getTempera());
+            sue = misdatos.getNot_s();
+            rui = misdatos.getNot_r();
+
             axu++;
             if (axu == 2) {
                 int ppm = 0;
@@ -573,7 +606,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
                 Conexion_base conn = new Conexion_base(this, "bd", null, 1);
                 SQLiteDatabase db = conn.getWritableDatabase();
 
-                db.execSQL("UPDATE info SET ppm_mx="+misdatos.getRimo_C()+",tempe="+misdatos.getTempera()+" WHERE id="+id);
+                db.execSQL("UPDATE info SET ppm_mx="+misdatos.getRimo_C()+",tempe="+misdatos.getTempera()+",not_rui="+sue+",not_sue="+rui+" WHERE id="+id);
 
 
                 //db.execSQL("INSERT INTO info(ppm_mx,tempe)values(" + misdatos.getRimo_C() + "," + misdatos.getTempera() + ")");
@@ -589,8 +622,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
 
             }
 
-            sue = misdatos.getNot_s();
-            rui = misdatos.getNot_r();
+
 
 
             switch (rui) {
@@ -634,6 +666,62 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
 
     }
 
+
+public  void ruido_guar(){
+
+
+
+    Conexion_base conn = new Conexion_base(this, "bd", null, 1);
+    SQLiteDatabase db = conn.getWritableDatabase();
+
+    db.execSQL("UPDATE info SET not_rui=1 WHERE id="+id);
+
+    db.close();
+
+
+}
+
+
+
+    public  void ruido_guar_n(){
+
+
+
+        Conexion_base conn = new Conexion_base(this, "bd", null, 1);
+        SQLiteDatabase db = conn.getWritableDatabase();
+
+        db.execSQL("UPDATE info SET not_rui=0 WHERE id="+id);
+
+        db.close();
+
+
+    }
+
+
+
+    public  void sue_guar(){
+
+
+
+        Conexion_base conn = new Conexion_base(this, "bd", null, 1);
+        SQLiteDatabase db = conn.getWritableDatabase();
+
+        db.execSQL("UPDATE info SET not_sue= 1 WHERE id="+id);
+
+        db.close();
+
+
+    }
+
+    public  void  sue_guar_n(){
+
+        Conexion_base conn = new Conexion_base(this, "bd", null, 1);
+        SQLiteDatabase db = conn.getWritableDatabase();
+
+        db.execSQL("UPDATE info SET not_sue= 0 WHERE id="+id);
+
+        db.close();
+    }
 
 
 }

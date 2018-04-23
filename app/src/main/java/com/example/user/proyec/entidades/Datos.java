@@ -5,6 +5,7 @@ public class Datos {
     private String pos;
     private String dor;
     private String ppm2;
+    private String ruido;
 
 
     private String nacimiento;
@@ -19,8 +20,13 @@ public class Datos {
     private String not_r;
 
 
+    public String getRuido() {
+        return ruido;
+    }
 
-
+    public void setRuido(String ruido) {
+        this.ruido = ruido;
+    }
 
     public String getRimo_C() {
         return rimo_C;

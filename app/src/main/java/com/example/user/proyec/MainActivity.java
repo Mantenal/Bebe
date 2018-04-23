@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
     int id,datos=0;
     String pos,dor;
+    int ruido,ppm2;
+    float tempe;
 
     EditText edi_temp,edi_pos,edi_sue,edi_ppm;
     RequestQueue request;
@@ -170,12 +172,43 @@ time.execute();
             misdatos.setDor(jsonObject.optString("e_dormir"));
             misdatos.setPos(jsonObject.optString("posicion"));
             misdatos.setTemp(jsonObject.optString("temperatura"));
+            misdatos.setRuido(jsonObject.optString("ruido"));
         } catch (JSONException e) {
             Toast.makeText(getBaseContext(),"Error al Actualizar",Toast.LENGTH_SHORT).show();
 
         }
+
+
+        Conexion_base conn = new Conexion_base(this, "bd", null, 1);
+        SQLiteDatabase db = conn.getWritableDatabase();
+        db.execSQL("INSERT INTO datos(tempe,ppm) values("+misdatos.getTemp()+","+misdatos.getPpm2()+")");
+        db.execSQL("UPDATE info set tempe2="+misdatos.getTemp()+",ppm_mx2="+misdatos.getPpm2()+" WHERE id="+id);
+
+
+        Cursor cursor=db.rawQuery("SELECT count(*) FROM datos",null);
+        while(cursor.moveToNext()) {
+            datos=cursor.getInt(0);
+
+        }
+        cursor.close();
+
+
+        if (datos>=500){
+            db.execSQL("Delete  From datos");
+        }
+        db.close();
+
+
         edi_ppm.setText(misdatos.getPpm2());
         edi_temp.setText(misdatos.getTemp());
+
+
+        datos_chidos();
+
+        ruido=Integer.parseInt(misdatos.getRuido());
+        ppm2=Integer.parseInt(misdatos.getPpm2());
+        tempe=Float.parseFloat(misdatos.getTemp());
+
         pos=misdatos.getPos();
         dor=misdatos.getDor();
         switch (pos){
@@ -200,24 +233,7 @@ time.execute();
             edi_sue.setText("Despierto");
         }
 
-        Conexion_base conn = new Conexion_base(this, "bd", null, 1);
-        SQLiteDatabase db = conn.getWritableDatabase();
-        db.execSQL("INSERT INTO datos(tempe,ppm) values("+misdatos.getTemp()+","+misdatos.getPpm2()+")");
-        db.execSQL("UPDATE info set tempe2="+misdatos.getTemp()+",ppm_mx2="+misdatos.getPpm2()+" WHERE id="+id);
 
-
-        Cursor cursor=db.rawQuery("SELECT count(*) FROM datos",null);
-        while(cursor.moveToNext()) {
-            datos=cursor.getInt(0);
-
-        }
-        cursor.close();
-
-
-        if (datos>=500){
-            db.execSQL("Delete  From datos");
-        }
-        db.close();
 
     }
 
@@ -250,6 +266,26 @@ time.execute();
             ejecutar();
 
         }
+    }
+
+
+
+    public void datos_chidos(){
+
+        Conexion_base conn = new Conexion_base(this, "bd", null, 1);
+        SQLiteDatabase db = conn.getWritableDatabase();
+
+        //datos que debo consultar años temperatura actual,ppp actual, si esta activada perspnalizacion,temperatura per,ppm_per,notificacion sueño y nositificacion ruido
+
+        Cursor cursor2=db.rawQuery("SELECT años,tempe,ppm_mx,perso,tempe2,ppm_mx2,not_ruid,not_sue FROM info",null);
+        while(cursor2.moveToNext()) {
+
+
+        }
+        cursor2.close();
+        db.close();
+
+
     }
 
 
