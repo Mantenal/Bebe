@@ -86,7 +86,34 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+       
         switch (item.getItemId()) {
+
+
+
+            case    R.id.mensa:
+
+                Conexion_base conn = new Conexion_base(this, "bd", null, 1);
+                SQLiteDatabase db = conn.getWritableDatabase();
+
+                float  tempe2=0;
+                int ppm=0;
+                Cursor cursor2=db.rawQuery("SELECT tempe2,ppm_mx2 FROM info",null);
+                while(cursor2.moveToNext()) {
+                    tempe2=cursor2.getFloat(0);
+                    ppm=cursor2.getInt(1);
+
+                }
+                cursor2.close();
+                db.close();
+
+                Intent sendText = new Intent();
+                sendText.setAction(Intent.ACTION_SEND);
+                sendText.putExtra(Intent.EXTRA_TEXT, "Temperatura actual: "+Float.toString(tempe2)+", Pulsaciones por minuto: "+Integer.toString(ppm));
+                sendText.setType("text/plain");
+                startActivity(sendText);
+
+                return  true;
 
             case R.id.esta:
                 startActivity(new Intent(getBaseContext(), estad.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));

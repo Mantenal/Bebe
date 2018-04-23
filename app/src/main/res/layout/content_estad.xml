@@ -20,13 +20,13 @@
         app:srcCompat="@mipmap/star" />
 
     <EditText
-        android:id="@+id/Text_Sueño"
+        android:id="@+id/Text_prom_ppm"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:labelFor="@+id/Text_Sueño"
+        android:inputType="numberDecimal"
+        android:labelFor="@+id/Text_prom_ppm"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/Text_Alarm"
         app:layout_constraintEnd_toEndOf="@+id/Text_Prom_Temp"
@@ -45,7 +45,7 @@
         android:inputType="textPersonName"
         android:labelFor="@+id/Text_Prom_Temp"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/Text_Sueño"
+        app:layout_constraintBottom_toTopOf="@+id/Text_prom_ppm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView5"
@@ -67,7 +67,7 @@
         android:layout_height="17dp"
         android:layout_marginBottom="8dp"
         android:text="PPM Promedio"
-        app:layout_constraintBottom_toBottomOf="@+id/Text_Sueño"
+        app:layout_constraintBottom_toBottomOf="@+id/Text_prom_ppm"
         app:layout_constraintStart_toStartOf="@+id/textView5" />
 
     <TextView
@@ -89,9 +89,9 @@
         android:labelFor="@+id/Text_Alarm"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/imageView2"
-        app:layout_constraintEnd_toEndOf="@+id/Text_Sueño"
+        app:layout_constraintEnd_toEndOf="@+id/Text_prom_ppm"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/Text_Sueño"
+        app:layout_constraintStart_toStartOf="@+id/Text_prom_ppm"
         android:focusable="false"/>
 
 </android.support.constraint.ConstraintLayout>

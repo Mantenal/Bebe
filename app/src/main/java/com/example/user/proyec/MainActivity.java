@@ -51,9 +51,35 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        Datos misdatos=new Datos();
 
         switch (item.getItemId()) {
+
+            case    R.id.mensa:
+
+                Conexion_base conn = new Conexion_base(this, "bd", null, 1);
+                SQLiteDatabase db = conn.getWritableDatabase();
+
+                float  tempe2=0;
+                int ppm=0;
+                Cursor cursor2=db.rawQuery("SELECT tempe2,ppm_mx2 FROM info",null);
+                while(cursor2.moveToNext()) {
+                    tempe2=cursor2.getFloat(0);
+                    ppm=cursor2.getInt(1);
+
+                }
+                cursor2.close();
+                db.close();
+
+                Intent sendText = new Intent();
+                sendText.setAction(Intent.ACTION_SEND);
+                sendText.putExtra(Intent.EXTRA_TEXT, "Temperatura actual: "+Float.toString(tempe2)+", Pulsaciones por minuto: "+Integer.toString(ppm));
+                sendText.setType("text/plain");
+                startActivity(sendText);
+
+
+                return  true;
+
 
             case R.id.configu:
                 startActivity(new Intent(getBaseContext(),config.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
@@ -177,6 +203,8 @@ time.execute();
         Conexion_base conn = new Conexion_base(this, "bd", null, 1);
         SQLiteDatabase db = conn.getWritableDatabase();
         db.execSQL("INSERT INTO datos(tempe,ppm) values("+misdatos.getTemp()+","+misdatos.getPpm2()+")");
+        db.execSQL("UPDATE info set tempe2="+misdatos.getTemp()+",ppm_mx2="+misdatos.getPpm2()+" WHERE id="+id);
+
 
         Cursor cursor=db.rawQuery("SELECT count(*) FROM datos",null);
         while(cursor.moveToNext()) {
@@ -184,23 +212,14 @@ time.execute();
 
         }
         cursor.close();
-        
+
+
         if (datos>=500){
             db.execSQL("Delete  From datos");
         }
         db.close();
 
-
-
-
-
-
     }
-
-
-
-
-
 
     public void hilo(){
         try {
