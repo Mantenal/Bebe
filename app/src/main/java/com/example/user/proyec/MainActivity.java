@@ -120,7 +120,9 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         cargawebservice();
 
 
-        NotificationCompat.Builder mBuilder;
+
+
+       /* NotificationCompat.Builder mBuilder;
         NotificationManager notificacion = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
 
         Intent i = new Intent(MainActivity.this, estad.class);
@@ -132,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                 .setContentText("Ya exploto")
                 .setVibrate(new long[]{100, 250, 100, 500})
                 .setAutoCancel(true);
-        notificacion.notify(1, mBuilder.build());
+        notificacion.notify(1, mBuilder.build());*/
         time.execute();
 
     }
@@ -211,14 +213,26 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         ppm2 = Integer.parseInt(misdatos.getPpm2());
         tempe = Float.parseFloat(misdatos.getTemp());
 
+
+
+
+
+
+
+
         pos = misdatos.getPos();
         dor = misdatos.getDor();
+
+
+
         switch (pos) {
             case "0":
                 edi_pos.setText("Boca Arriba");
                 break;
             case "1":
                 edi_pos.setText("Boca Abajo");
+
+
                 break;
             case "3":
                 edi_pos.setText("De Costado");
@@ -228,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                 break;
         }
 
-        if (dor == "1") {
+       if (dor == "1") {
             edi_sue.setText("Dormido");
         } else {
             edi_sue.setText("Despierto");
@@ -296,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         db.close();
 
 
-        //Toast.makeText(getBaseContext(),"Error"+Integer.toString(años_bb)+", "+Float.toString(temperatura_actual)+", "+Integer.toString(ppm_actual)+", "+Integer.toString(perso)+", "+Float.toString(temperatura_perso)+", "+Integer.toString(ppm_perso)+", "+Integer.toString(not_ruido)+", "+Integer.toString(not_sueño),Toast.LENGTH_LONG).show();
+       // Toast.makeText(getBaseContext(),"Error"+Integer.toString(años_bb)+", "+Float.toString(temperatura_actual)+", "+Integer.toString(ppm_actual)+", "+Integer.toString(perso)+", "+Float.toString(temperatura_perso)+", "+Integer.toString(ppm_perso)+", "+Integer.toString(not_ruido)+", "+Integer.toString(not_sueño),Toast.LENGTH_LONG).show();
 
 
         NotificationCompat.Builder mBuilder;
@@ -307,6 +321,129 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         if (perso == 0) {
 
 
+            switch (años_bb){
+
+                case 0:
+                    if (ppm_actual>=165){
+                        ritmo_alto();
+
+                    }
+                    break;
+
+                case 1:
+                    if (ppm_actual>=135){
+                        ritmo_alto();
+
+                    }
+                    break;
+
+                case 2:
+                    if (ppm_actual>=125){
+                        ritmo_alto();
+
+                    }
+                    break;
+
+                case 3:
+                    if (ppm_actual>=125){
+                        ritmo_alto();
+
+                    }
+
+                    break;
+
+                case 4:
+
+                    if (ppm_actual>=125){
+                        ritmo_alto();
+
+                    }
+                    break;
+
+
+                    default:
+                        if (ppm_actual>=120){
+                            ritmo_alto();
+
+                        }
+                        break;
+
+            }
+
+            if (ppm_actual<85&&ppm_actual>75){
+
+                mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                        .setContentIntent(pendingintent)
+                        .setSmallIcon(R.drawable.notificacion)
+                        .setContentTitle("Dormido")
+                        .setContentText("Su bebe esta dormido")
+                        .setVibrate(new long[]{100, 250, 100, 500})
+                        .setAutoCancel(true);
+                notificacion.notify(1, mBuilder.build());
+                edi_sue.setText("Dormido");
+
+
+
+            }
+
+            else{
+                edi_sue.setText("Despierto");
+
+            }
+
+            if (temperatura_actual>37.9){
+
+                mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                        .setContentIntent(pendingintent)
+                        .setSmallIcon(R.drawable.notificacion)
+                        .setContentTitle("Temperatura Alta")
+                        .setContentText("La temperatura esta fuera de los los parametros")
+                        .setVibrate(new long[]{100, 250, 100, 500})
+                        .setAutoCancel(true);
+                notificacion.notify(2, mBuilder.build());
+
+
+            }
+
+
+            if (temperatura_actual<36.9){
+
+                mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                        .setContentIntent(pendingintent)
+                        .setSmallIcon(R.drawable.notificacion)
+                        .setContentTitle("Temperatura Baja")
+                        .setContentText("La temperatura esta fuera de los los parametros")
+                        .setVibrate(new long[]{100, 250, 100, 500})
+                        .setAutoCancel(true);
+                notificacion.notify(3, mBuilder.build());
+
+            }
+            if (ppm_actual<75){
+
+                mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                        .setContentIntent(pendingintent)
+                        .setSmallIcon(R.drawable.notificacion)
+                        .setContentTitle("Ritmo Cardiaco Bajo")
+                        .setContentText("El ritmo cardiaco esta fuera de los parametros")
+                        .setVibrate(new long[]{100, 250, 100, 500})
+                        .setAutoCancel(true);
+                notificacion.notify(4, mBuilder.build());
+            }
+
+
+
+            if (ruido==1){
+                mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                        .setContentIntent(pendingintent)
+                        .setSmallIcon(R.drawable.notificacion)
+                        .setContentTitle("Ruido")
+                        .setContentText("Se a detectado mucho ruido")
+                        .setVibrate(new long[]{100, 250, 100, 500})
+                        .setAutoCancel(true);
+                notificacion.notify(5, mBuilder.build());
+
+            }
+
 
 
 
@@ -314,25 +451,124 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         }
 
 
-        mBuilder = new NotificationCompat.Builder(getApplicationContext())
-                .setContentIntent(pendingintent)
-                .setSmallIcon(R.drawable.notificacion)
-                .setContentTitle("Ritmo Cardiaco bajo")
-                .setContentText("El Ritmo cardiaco de su bebe esta debajo de los parametros")
-                .setVibrate(new long[]{100, 250, 100, 500})
-                .setAutoCancel(true);
-        notificacion.notify(1, mBuilder.build());
+        if (perso==1){
+
+            if (ppm_actual>ppm_perso){
+
+                ritmo_alto();
 
 
-        mBuilder = new NotificationCompat.Builder(getApplicationContext())
-                .setContentIntent(pendingintent)
-                .setSmallIcon(R.drawable.notificacion)
-                .setContentTitle("Ritmo Cardiaco bajo")
-                .setContentText("x2")
-                .setVibrate(new long[]{100, 250, 100, 500})
-                .setAutoCancel(true);
-        notificacion.notify(1, mBuilder.build());
+            }
+
+
+
+
+            if (temperatura_actual>temperatura_perso+.9){
+
+                mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                        .setContentIntent(pendingintent)
+                        .setSmallIcon(R.drawable.notificacion)
+                        .setContentTitle("Temperatura Alta")
+                        .setContentText("La temperatura esta fuera de los los parametros")
+                        .setVibrate(new long[]{100, 250, 100, 500})
+                        .setAutoCancel(true);
+                notificacion.notify(6, mBuilder.build());
+
+
+            }
+
+
+            if (temperatura_actual<temperatura_perso-.9){
+
+                mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                        .setContentIntent(pendingintent)
+                        .setSmallIcon(R.drawable.notificacion)
+                        .setContentTitle("Temperatura Baja")
+                        .setContentText("La temperatura esta fuera de los los parametros")
+                        .setVibrate(new long[]{100, 250, 100, 500})
+                        .setAutoCancel(true);
+                notificacion.notify(7, mBuilder.build());
+
+            }
+
+
+            if (not_ruido==1){
+
+
+                if (ruido==1){
+                    mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                            .setContentIntent(pendingintent)
+                            .setSmallIcon(R.drawable.notificacion)
+                            .setContentTitle("Ruido")
+                            .setContentText("Se a detectado mucho ruido")
+                            .setVibrate(new long[]{100, 250, 100, 500})
+                            .setAutoCancel(true);
+                    notificacion.notify(8, mBuilder.build());
+
+                }
+
+
+            }
+
+
+            if(not_sueño==1){
+
+
+
+                if (ppm_actual<85&&ppm_actual>75){
+
+                    mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                            .setContentIntent(pendingintent)
+                            .setSmallIcon(R.drawable.notificacion)
+                            .setContentTitle("Dormido")
+                            .setContentText("Su bebe esta dormido")
+                            .setVibrate(new long[]{100, 250, 100, 500})
+                            .setAutoCancel(true);
+                    notificacion.notify(9, mBuilder.build());
+                    edi_sue.setText("Dormido");
+
+
+
+                }
+
+                else {
+                    edi_sue.setText("Despierto");
+                }
+
+
+
+
+            }
+
+
+
+
+
+        }
+
+
 
 
     }
+
+
+
+
+    public void ritmo_alto(){
+
+        NotificationCompat.Builder mBuilder;
+        NotificationManager notificacion = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+        PendingIntent pendingintent = PendingIntent.getActivity(MainActivity.this, 0, this.getIntent(), 0);
+
+        mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                .setContentIntent(pendingintent)
+                .setSmallIcon(R.drawable.notificacion)
+                .setContentTitle("Ritmo Cardiaco Elevado")
+                .setContentText("El Ritmo cardiaco de su bebe esta arriba de los parametros")
+                .setVibrate(new long[]{100, 250, 100, 500})
+                .setAutoCancel(true);
+        notificacion.notify(10, mBuilder.build());
+
+    }
+
 }

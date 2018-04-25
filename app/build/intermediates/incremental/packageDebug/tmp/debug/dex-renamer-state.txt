@@ -1,4 +1,7 @@
-#Tue Apr 24 20:36:55 CDT 2018
-base.0=C\:\\Users\\user\\Desktop\\Bebe\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\14
+#Tue Apr 24 21:04:11 CDT 2018
+base.0=C\:\\Users\\user\\Desktop\\Bebe\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\27
+path.1=classes.dex
+renamed.1=classes2.dex
 path.0=classes.dex
 renamed.0=classes.dex
+base.1=C\:\\Users\\user\\Desktop\\Bebe\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\26
