@@ -77,14 +77,11 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                 }
                 cursor2.close();
                 db.close();
-
                 Intent sendText = new Intent();
                 sendText.setAction(Intent.ACTION_SEND);
                 sendText.putExtra(Intent.EXTRA_TEXT, "Temperatura actual: " + Float.toString(tempe2) + ", Pulsaciones por minuto: " + Integer.toString(ppm));
                 sendText.setType("text/plain");
                 startActivity(sendText);
-
-
                 return true;
 
 
@@ -169,6 +166,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
         Datos misdatos = new Datos();
         JSONArray json = response.optJSONArray("actual");
+
         JSONObject jsonObject = null;
         try {
             jsonObject = json.getJSONObject(0);
@@ -242,11 +240,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                 break;
         }
 
-       if (dor == "1") {
-            edi_sue.setText("Dormido");
-        } else {
-            edi_sue.setText("Despierto");
-        }
+
 
 
     }
@@ -544,6 +538,14 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
 
 
+        }
+
+        if ( ppm_actual<85&&ppm_actual>75){
+            edi_sue.setText("Dormido");
+        }
+
+        else {
+            edi_sue.setText("Despidsadaserto");
         }
 
 

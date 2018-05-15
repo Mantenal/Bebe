@@ -16,10 +16,12 @@ $json=array();
 		$resultado_insert=mysqli_query($conexion,$insert);
 		$insert1="INSERT INTO actual(id,temperatura,posicion,e_dormir,ritmo_c,ruido) VALUES ('{$id}','0','0','0','0','0')";
 		mysqli_query($conexion,$insert1);
-		$insert2="INSERT INTO bebe(id,n_nacimiento,peso,sexo,ritmo_c,personalizacion,actual) VALUES ('{$id}','2018-03-07','0','0','0','{$id}','{$id}')";
+		$insert2="INSERT INTO bebe(id,n_nacimiento,peso,sexo,config,ritmo_c,personalizacion,actual) VALUES ('{$id}','2018-03-07','0','0','0','0','{$id}','{$id}')";
 		mysqli_query($conexion,$insert2);
 		$insert3="INSERT INTO dia(id,ritmo_c,alarmas,temperatura,actual,bebe) VALUES ('{$id}','0','0','0','{$id}','{$id}')";
 		mysqli_query($conexion,$insert3);
+	
+		
 		
 		if($resultado_insert){
 			$consulta="SELECT * FROM personalizacion WHERE id = '{$id}'";
@@ -54,3 +56,6 @@ $json=array();
 		}
 
 ?>
+
+
+
