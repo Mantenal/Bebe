@@ -3,21 +3,16 @@ package com.example.user.proyec;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ClipData;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.content.Intent;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -49,6 +44,11 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     JsonObjectRequest jsonObjectR;
 
 
+    /**
+     * Funcion encargada de crear el menu superior en la interfaz
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -56,6 +56,21 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         return true;
     }
 
+
+    /**
+     * Interfaz encargada de darle funcionalidad al menu superior
+     * Existen 4 botones en la interfaz que al ser presionados hacen accion determinada
+     * Mensaje, id mensa: hace una consulta de la base de datos interna para obtener la informacion
+     * de la temperatura actual y las pulsaciones por minuto actuales para despues mandarse mediante un mensaje
+     *
+     * Configuracion, id config:se encarga de abrir la actividad de configuracion
+     *
+     * Estadisticasm id esta: se encarga de abrir la actividad de estadisticas
+     *
+     * Corazon, id cora: se encarga de abir la actividad principal (Datos tiempo real)
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Datos misdatos = new Datos();
@@ -100,7 +115,12 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
     }
 
-
+    /**
+     * Funcion encargada de inicializar la pantalla principal y todos sus componetes, una vez
+     * inicializado se llama a la funcion de cargar web service y se inicia un nuevo hilo para hacer las consultas
+     * cada 30 segundos
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,9 +135,6 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
         time time = new time();
         cargawebservice();
-
-
-
 
        /* NotificationCompat.Builder mBuilder;
         NotificationManager notificacion = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
@@ -137,6 +154,10 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     }
 
 
+    /**
+     * Funcion encargada de abrir la base de datos interna para consultar el id a que consultar
+     * y luego llama a el web service que le es regresado un objeto tipo Json
+     */
     public void cargawebservice() {
 
         Conexion_base conn = new Conexion_base(this, "bd", null, 1);
@@ -153,6 +174,11 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         request.add(jsonObjectR);
     }
 
+
+    /***
+     * En caso de que el web service no responda a la peticion se mostrara un mensaje de error
+     * @param error
+     */
     @Override
     public void onErrorResponse(VolleyError error) {
         Toast.makeText(getBaseContext(), "Error al Actualizar", Toast.LENGTH_SHORT).show();
@@ -161,13 +187,20 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     }
 
 
+    /**
+     * Funcion que es activada en caso de que el servidor si responda, todos los datos son extraidos
+     * del objeto Json para que despues los datos de temperatura y ppm se inserten en un tabla de la bd
+     * interna para su posterior promedio, luego se escribe en pantalla los datos obtenidos y se llama a la funcion de notificaciones
+     *
+     * @param response
+     */
     @Override
     public void onResponse(JSONObject response) {
 
         Datos misdatos = new Datos();
         JSONArray json = response.optJSONArray("actual");
 
-        JSONObject jsonObject = null;
+        JSONObject jsonObject = null; //Intenta extrar todos los datos del objeto Json y se llama a  los set correspondiente
         try {
             jsonObject = json.getJSONObject(0);
             misdatos.setPpm2(jsonObject.optString("ritmo_c"));
@@ -195,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         cursor.close();
 
 
-        if (datos >= 500) {
+        if (datos >= 500) { //cuando los datos de temperatura y ppm superan las 500 filas es borrada la tabla para que se siga puedan insertar datos mas recientes
             db.execSQL("Delete  From datos");
         }
         db.close();
@@ -205,17 +238,11 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         edi_temp.setText(misdatos.getTemp());
 
 
-        datos_chidos();
+        notificaciones();
 
         ruido = Integer.parseInt(misdatos.getRuido());
         ppm2 = Integer.parseInt(misdatos.getPpm2());
         tempe = Float.parseFloat(misdatos.getTemp());
-
-
-
-
-
-
 
 
         pos = misdatos.getPos();
@@ -245,6 +272,9 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
     }
 
+    /**
+     * Funcion que se encarga de poner a dormir un hilo durante 30 segundos
+     */
     public void hilo() {
         try {
             Thread.sleep(30000);
@@ -253,14 +283,22 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         }
     }
 
+    /**
+     * Funcion encargada de inicializar tiempo y llamar a la nueva funcion
+     */
     public void ejecutar() {
         time time = new time();
         time.execute();
 
     }
 
-    public class time extends AsyncTask<Void, Integer, Boolean> {
 
+    /**
+     * Fucion encargada de llamar a la funcion de hilo en segundo plano para que siempre se este
+     * actualizando los datos aunque este fuera de la app y en cuando acabe el hilo lo vuelve llamar
+     * para que sea un ciclo repetitivo hasta que la app se cierre
+     */
+    public class time extends AsyncTask<Void, Integer, Boolean> {
 
         @Override
         protected Boolean doInBackground(Void... voids) {
@@ -277,7 +315,15 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     }
 
 
-    public void datos_chidos() {
+    /**
+     * Funcion encargada de usar los datos obtenidos del servidor para mandar notificaciones segun los
+     * parametros que fueron ingresados en la interfaz de configuraciones
+     *
+     * En caso de que personalizacion este activada revisa si se desea recibir notificaciones de
+     * sueño y de ruido y revisa los valores de personalizacion en caso de que algun valor recibido
+     * salio de los parametros se lanza una notificacion con la descripcion
+     */
+    public void notificaciones() {
 
         Conexion_base conn = new Conexion_base(this, "bd", null, 1);
         SQLiteDatabase db = conn.getWritableDatabase();
@@ -443,6 +489,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
 
         }
+
 
 
         if (perso==1){

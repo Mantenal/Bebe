@@ -25,6 +25,11 @@ public class estad extends AppCompatActivity {
     String temp2;
     int alar;
 
+    /**
+     * Incializa la barra superior
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -33,6 +38,21 @@ public class estad extends AppCompatActivity {
 
     }
 
+
+    /**
+     * Interfaz encargada de darle funcionalidad al menu superior
+     * Existen 4 botones en la interfaz que al ser presionados hacen accion determinada
+     * Mensaje, id mensa: hace una consulta de la base de datos interna para obtener la informacion
+     * de la temperatura actual y las pulsaciones por minuto actuales para despues mandarse mediante un mensaje
+     *
+     * Configuracion, id config:se encarga de abrir la actividad de configuracion
+     *
+     * Estadisticasm id esta: se encarga de abrir la actividad de estadisticas
+     *
+     * Corazon, id cora: se encarga de abir la actividad principal (Datos tiempo real)
+     * @param item
+     * @return
+     */
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -81,6 +101,13 @@ public class estad extends AppCompatActivity {
         }
 
     }
+
+
+    /**
+     * Incializa los componentes de la interfaz y se hace un promedio de los ultimos 500 valores recibidos
+     * de temeperatura y ritmo
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,6 +139,11 @@ public class estad extends AppCompatActivity {
 
     }
 
+    /**
+     * Saca el valor en dos decimales de temperatura
+     * @param valor
+     * @return
+     */
     private String obtieneDosDecimales(float valor){
         DecimalFormat format = new DecimalFormat();
         format.setMaximumFractionDigits(1); //Define 2 decimales.
@@ -119,6 +151,9 @@ public class estad extends AppCompatActivity {
     }
 
 
+    /**
+     * Consulta el numero de alarmas que tiene registrado el sistema
+     */
     private void alarmas(){
         Conexion_base conn=new Conexion_base(this,"bd",null,1);
         SQLiteDatabase db=conn.getWritableDatabase();

@@ -1044,6 +1044,10 @@
         "source": "C:\\Users\\user\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-27.0.2.aar\\cae0c07955d6fb0edf86623d42bd80a1\\res\\layout\\notification_template_big_media_narrow.xml"
     },
     {
+        "merged": "C:\\Users\\user\\Desktop\\Bebe\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_conectar.xml.flat",
+        "source": "C:\\Users\\user\\Desktop\\Bebe\\app\\src\\main\\res\\layout\\activity_conectar.xml"
+    },
+    {
         "merged": "C:\\Users\\user\\Desktop\\Bebe\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_btn_check_to_on_mtrl_000.png.flat",
         "source": "C:\\Users\\user\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.0.2.aar\\f7723607e45030c258928fbcbc62c624\\res\\drawable-hdpi-v4\\abc_btn_check_to_on_mtrl_000.png"
     },

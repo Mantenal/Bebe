@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -79,10 +80,18 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
     }
 
     /**
-     * Funcion encargada de generar los botones de la parte superior y decirle la funcion que va a tomar
+     * Interfaz encargada de darle funcionalidad al menu superior
+     * Existen 4 botones en la interfaz que al ser presionados hacen accion determinada
+     * Mensaje, id mensa: hace una consulta de la base de datos interna para obtener la informacion
+     * de la temperatura actual y las pulsaciones por minuto actuales para despues mandarse mediante un mensaje
      *
+     * Configuracion, id config:se encarga de abrir la actividad de configuracion
+     *
+     * Estadisticasm id esta: se encarga de abrir la actividad de estadisticas
+     *
+     * Corazon, id cora: se encarga de abir la actividad principal (Datos tiempo real)
      * @param item
-     * @return retorna el item que fue presionado para que se ejecute la ccion requerida
+     * @return
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -129,16 +138,28 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
     }
 
     /**
-     * Esta funcion se encarga de abrir la pantalla de red cuando es presionado el boton correspondiente en la interfaz
+     * Esta funcion se encarga de abrir la pantalla de red cuando es presionado el boton de red
      *
      * @param v
      */
     public void lanzar(View v) {
-        Intent i = new Intent(this, Red.class);
+       // Intent i = new Intent(this, Red.class);
+      Intent i = new Intent(this, conectar.class);
         startActivity(i);
+
+        /*    String link = "http://192.168.4.1";
+            Intent intent = null;
+            intent = new Intent(intent.ACTION_VIEW, Uri.parse(link));
+            startActivity(intent);*/
+
+
     }
 
-
+    /**
+     * Inicializa la pantalla de configuracion y todos sus componentes, se llama a al abase de datos para
+     * consultar el id al que se va a consultar y se hacen los listener para los switch y la fecha
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -186,7 +207,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
             }
         });
 
-
+//si se activa o desactiva el switch de ruido manda una alerta y se guarda el estado del switch
         notif_ruid.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -206,6 +227,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
             }
         });
 
+        //Si se activa la configuracion personalizada muestra los text box ocultos en caso de que este desctivado los oculta
         switchE.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -249,6 +271,8 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
             }
         });
 
+
+
         notifc_sueño.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -265,6 +289,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
             }
         });
 
+        //Se guaradan los datos en el servidor
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -272,6 +297,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
             }
         });
 
+        //Se llama al servidor para reinicar todos los valores
         restaurar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -342,6 +368,9 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
     }
 
 
+    /**
+     * Crea un date picker para la sellecion de fecha en caso de presionar el textbox de fecha
+     */
     private void fecha() {
 
         final Calendar c = Calendar.getInstance();
@@ -361,7 +390,9 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
 
     }
 
-
+    /**
+     * Se manda dos alertas para confirmar el borrado de toda la informacion
+     */
     private void confirmar_reiniciar() {
 
         AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
@@ -387,6 +418,11 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
     }
 
 
+    /**
+     * En caso de que se desee reinicar toda la info es llamado a la funcion correspondiente  para llamr
+     * al web service
+     *
+     */
     private void seguro() {
         AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
         dialogo.setTitle("¿Seguro?");
@@ -410,6 +446,9 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
 
     }
 
+    /**
+     * Llama al web service para borrar toda la info segun el di del dispositivo
+     */
     private void reiniciar() {
 
         String url = "http://simon-baby.com/bebe/borrar.php?id=" + id;
@@ -419,6 +458,9 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
     }
 
 
+    /**
+     * Se pide confirmacion para guardar los datos en el servidor
+     */
     private void confirmar_carga() {
 
         AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
@@ -443,7 +485,9 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
 
     }
 
-
+    /**
+     * Esta funcion es encargada de cargar toda la informacion cuando se inicia la pantalla
+     */
     private void llamar_info() {
         String url = "http://simon-baby.com/bebe/consul_config.php?id=" + id;
         jsonObjectR = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
@@ -453,7 +497,9 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
 
     }
 
-
+    /**
+     * Se consulta la informacion de configuracion personalizada
+     */
     public void llamar_info2() {
 
         String url = "http://simon-baby.com/bebe/consul_perso.php?id=" + id;
@@ -463,6 +509,10 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
 
     }
 
+    /**
+     * LLama a a la informacion de la pantalla de configuracion y si esta activado el switch de personalizacion
+     * llamar tambien la infoamcion de personalizacion
+     */
     private void cargarwebservice() {
 
 
@@ -477,7 +527,10 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         }
     }
 
-
+    /**
+     * Manda mensaje de error en caso de que no se pudiera contactar con el servidor
+     * @param error
+     */
     @Override
     public void onErrorResponse(VolleyError error) {
 
@@ -486,7 +539,12 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
 
     }
 
-
+    /**
+     * Funcion encargada de hacer el calculo de la edad del bebe segun la fecha actual y la fecha insertada por el usuario
+     * @param fechaNacimiento
+     * @param fechaActual
+     * @return
+     */
     private static int getEdad(Date fechaNacimiento, Date fechaActual) {
         DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
         int dIni = Integer.parseInt(formatter.format(fechaNacimiento));
@@ -496,7 +554,12 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         return age;
     }
 
-
+    /**
+     * Funcion que es llamada en caso de que el servidor responda, extrae la infomacion del objeto json
+     * y en caso de que se llame a la informacion personalizada hace otra consulta y almacena los
+     * datos consultados en la base de datos interna  para posteriormente ser mostrada en la poantalla
+     * @param response
+     */
     @Override
     public void onResponse(JSONObject response) {
 
@@ -657,6 +720,9 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
     }
 
 
+    /**
+     * Funcion que es llamada si el swithc de personalizacion es activado para darle almacenar el valor en la bd interna
+     */
     public void base_config(){
 
         Conexion_base conn = new Conexion_base(this, "bd", null, 1);
@@ -667,7 +733,10 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
     }
 
 
-public  void ruido_guar(){
+    /**
+     * Funcion que es llamasa si el switch de ruido es activado para alamcenar su vcalor en la base de datos interna
+     */
+    public  void ruido_guar(){
 
 
 
@@ -682,7 +751,9 @@ public  void ruido_guar(){
 }
 
 
-
+    /**
+     * Funcion que es llamasa si el switch de ruido es desactivado para alamcenar su vcalor en la base de datos interna
+     */
     public  void ruido_guar_n(){
 
 
@@ -698,6 +769,9 @@ public  void ruido_guar(){
     }
 
 
+    /**
+     * Funcion que es llamasa si el switch de sueño es activado para alamcenar su vcalor en la base de datos interna
+     */
 
     public  void sue_guar(){
 
@@ -713,6 +787,10 @@ public  void ruido_guar(){
 
     }
 
+
+    /**
+     * Funcion que es llamasa si el switch de sueño es desactivado para alamcenar su vcalor en la base de datos interna
+     */
     public  void  sue_guar_n(){
 
         Conexion_base conn = new Conexion_base(this, "bd", null, 1);
