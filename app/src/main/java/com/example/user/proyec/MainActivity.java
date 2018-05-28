@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -133,8 +134,26 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         edi_temp = findViewById(R.id.edit_temp);
         request = Volley.newRequestQueue(getBaseContext());
 
-        time time = new time();
-        cargawebservice();
+
+        Conexion_base conn = new Conexion_base(this, "bd", null, 1);
+        SQLiteDatabase db = conn.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT id FROM info", null);
+        while (cursor.moveToNext()) {
+            id = cursor.getInt(0);
+        }
+        cursor.close();
+        db.close();
+
+        if (id==0){
+            Intent i = new Intent(this, Primera.class);
+            startActivity(i);
+
+        }
+    else {
+
+
+            time time = new time();
+            cargawebservice();
 
        /* NotificationCompat.Builder mBuilder;
         NotificationManager notificacion = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
@@ -149,7 +168,8 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                 .setVibrate(new long[]{100, 250, 100, 500})
                 .setAutoCancel(true);
         notificacion.notify(1, mBuilder.build());*/
-        time.execute();
+            time.execute();
+        }
 
     }
 
@@ -169,9 +189,13 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         cursor.close();
         db.close();
 
-        String url = "http://simon-baby.com/bebe/consul_bebe.php?id=" + id;
-        jsonObjectR = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
-        request.add(jsonObjectR);
+
+
+
+            String url = "http://simon-baby.com/bebe/consul_bebe.php?id=" + id;
+            jsonObjectR = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+            request.add(jsonObjectR);
+
     }
 
 
@@ -251,16 +275,16 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
 
         switch (pos) {
-            case "0":
+            case "1":
                 edi_pos.setText("Boca Arriba");
                 break;
-            case "1":
-                edi_pos.setText("Boca Abajo");
+            case "3":
+                edi_pos.setText("Acostado Lado Izquierdo");
 
 
                 break;
-            case "3":
-                edi_pos.setText("De Costado");
+            case "2":
+                edi_pos.setText("Acostado Lado Derecho");
                 break;
             default:
                 edi_pos.setText("Sin Info");
@@ -277,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
      */
     public void hilo() {
         try {
-            Thread.sleep(30000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -592,7 +616,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         }
 
         else {
-            edi_sue.setText("Despidsadaserto");
+            edi_sue.setText("Despierto");
         }
 
 

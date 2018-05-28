@@ -49,6 +49,8 @@
     <string name="peso">Peso:</string>
     <string name="valores_personalizados">Valores Personalizados</string>
     <string name="posici_n">Posición</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="id_simon">ID SIMON</string>
     <string-array name="genero">
         <item>Masculino</item>
         <item>Femenino</item>

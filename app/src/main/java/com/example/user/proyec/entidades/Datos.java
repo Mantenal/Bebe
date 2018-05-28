@@ -19,6 +19,8 @@ public class Datos {
     private String not_s;
     private String not_r;
 
+    private String id_bebe;
+
 
     public String getRuido() {
         return ruido;
@@ -132,5 +134,13 @@ public class Datos {
 
     public void setPpm2(String ppm2) {
         this.ppm2 = ppm2;
+    }
+
+    public String getId_bebe() {
+        return id_bebe;
+    }
+
+    public void setId_bebe(String id_bebe) {
+        this.id_bebe = id_bebe;
     }
 }

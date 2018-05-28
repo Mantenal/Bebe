@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:2:1-48:12
-INJECTED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:2:1-48:12
-INJECTED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:2:1-48:12
-INJECTED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:2:1-48:12
+ADDED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:2:1-54:12
+INJECTED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:2:1-54:12
+INJECTED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:2:1-54:12
+INJECTED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:2:1-54:12
 MERGED from [com.android.support:design:27.0.2] C:\Users\user\.gradle\caches\transforms-1\files-1.1\design-27.0.2.aar\21727eb97f3b73e562f87c9307054c4c\AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support:appcompat-v7:27.0.2] C:\Users\user\.gradle\caches\transforms-1\files-1.1\appcompat-v7-27.0.2.aar\f7723607e45030c258928fbcbc62c624\AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\user\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\50e1209b9f4ff29bfa497b2f15fa1633\AndroidManifest.xml:2:1-11:12
@@ -19,20 +19,20 @@ MERGED from [com.android.support:support-core-ui:27.0.2] C:\Users\user\.gradle\c
 MERGED from [com.android.support:support-media-compat:27.0.2] C:\Users\user\.gradle\caches\transforms-1\files-1.1\support-media-compat-27.0.2.aar\cae0c07955d6fb0edf86623d42bd80a1\AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support:support-compat:27.0.2] C:\Users\user\.gradle\caches\transforms-1\files-1.1\support-compat-27.0.2.aar\0e859cae34cbb3586de32f7c2f593b69\AndroidManifest.xml:17:1-22:12
 MERGED from [android.arch.lifecycle:runtime:1.0.3] C:\Users\user\.gradle\caches\transforms-1\files-1.1\runtime-1.0.3.aar\671c859e7e3e86fbd4ae0db9acbcf8a1\AndroidManifest.xml:17:1-24:12
-INJECTED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:2:1-48:12
-INJECTED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:2:1-48:12
-INJECTED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:2:1-48:12
+INJECTED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:2:1-54:12
+INJECTED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:2:1-54:12
+INJECTED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:2:1-54:12
 	package
 		ADDED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:3:5-38
 		INJECTED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:2:1-48:12
+		ADDED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:2:1-54:12
 		INJECTED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:2:1-48:12
+		ADDED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:2:1-54:12
 		INJECTED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:2:11-69
@@ -41,7 +41,7 @@ ADDED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:5:5-67
 	android:name
 		ADDED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:5:22-64
 application
-ADDED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:7:5-46:19
+ADDED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:7:5-52:19
 MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\user\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\50e1209b9f4ff29bfa497b2f15fa1633\AndroidManifest.xml:9:5-20
 MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\user\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\50e1209b9f4ff29bfa497b2f15fa1633\AndroidManifest.xml:9:5-20
 MERGED from [com.android.volley:volley:1.1.0] C:\Users\user\.gradle\caches\transforms-1\files-1.1\volley-1.1.0.aar\19d8a437a4b7e33192b4b228b6e768d7\AndroidManifest.xml:9:5-20
@@ -117,9 +117,13 @@ ADDED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:40:9-44:5
 	android:name
 		ADDED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:41:13-32
 activity#com.example.user.proyec.conectar
-ADDED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:45:9-55
+ADDED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:45:9-46
 	android:name
 		ADDED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:45:19-43
+activity#com.example.user.proyec.Primera
+ADDED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:47:9-51:20
+	android:name
+		ADDED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml:48:13-36
 uses-sdk
 INJECTED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\user\Desktop\Bebe\app\src\main\AndroidManifest.xml

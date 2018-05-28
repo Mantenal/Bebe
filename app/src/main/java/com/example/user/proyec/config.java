@@ -61,7 +61,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
     RequestQueue reques;
     JsonObjectRequest jsonObjectR;
 
-    public int ruido, sueño, per, sexo = 0, bebe, id = 0, dia, mes, año, actu, val = 0;
+    public int ruido, sueño, per, sexo = 0, bebe, id, dia, mes, año, actu, val = 0;
     public String sexo_ob, confi, sue, rui, fecha;
     public static int años, años2, axu = 0;
 
@@ -180,8 +180,6 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         bebe = 15;
         edit_naci.setInputType(InputType.TYPE_NULL);
 
-        llamar_info();
-
 
         Conexion_base conn = new Conexion_base(this, "bd", null, 1);
         SQLiteDatabase db = conn.getWritableDatabase();
@@ -191,6 +189,15 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         }
         cursor.close();
         db.close();
+
+
+
+
+
+        llamar_info();
+
+
+
 
 
         edit_naci.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -451,12 +458,28 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
      */
     private void reiniciar() {
 
+
+
         String url = "http://simon-baby.com/bebe/borrar.php?id=" + id;
         jsonObjectR = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         reques.add(jsonObjectR);
 
+       //eliminar_base();
+
+
+
     }
 
+
+    public void eliminar_base(){
+        Conexion_base conn = new Conexion_base(this, "bd", null, 1);
+        SQLiteDatabase db = conn.getWritableDatabase();
+        db.execSQL("UPDATE info set id=0 WHERE id="+id);
+        db.close();
+        Intent i = new Intent(this, Primera.class);
+        startActivity(i);
+
+    }
 
     /**
      * Se pide confirmacion para guardar los datos en el servidor

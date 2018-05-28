@@ -42,7 +42,13 @@
             android:label="@string/title_activity_red"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".conectar"></activity>
+        <activity android:name=".conectar" />
+
+        <activity
+            android:name=".Primera">
+            android:screenOrientation="portrait"
+
+        </activity>
     </application>
 
 </manifest>
