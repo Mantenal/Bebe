@@ -434,17 +434,22 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
             }
 
-            if (ppm_actual<85&&ppm_actual>75){
+            if (ppm_actual<85&&ppm_actual>70){
 
-                mBuilder = new NotificationCompat.Builder(getApplicationContext())
-                        .setContentIntent(pendingintent)
-                        .setSmallIcon(R.drawable.notificacion)
-                        .setContentTitle("Dormido")
-                        .setContentText("Su bebe esta dormido")
-                        .setVibrate(new long[]{100, 250, 100, 500})
-                        .setAutoCancel(true);
-                notificacion.notify(1, mBuilder.build());
-                edi_sue.setText("Dormido");
+                if (ruido==0) {
+
+                    mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                            .setContentIntent(pendingintent)
+                            .setSmallIcon(R.drawable.notificacion)
+                            .setContentTitle("Dormido")
+                            .setContentText("Su bebe esta dormido")
+                            .setAutoCancel(true);
+                    notificacion.notify(1, mBuilder.build());
+                    edi_sue.setText("Dormido");
+                }
+                else {
+                    edi_ppm.setText("Ruido");
+                }
 
 
 
@@ -470,7 +475,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             }
 
 
-            if (temperatura_actual<36.9){
+            if (temperatura_actual<36){
 
                 mBuilder = new NotificationCompat.Builder(getApplicationContext())
                         .setContentIntent(pendingintent)
@@ -482,16 +487,24 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                 notificacion.notify(3, mBuilder.build());
 
             }
-            if (ppm_actual<75){
+            if (ppm_actual<70){
 
-                mBuilder = new NotificationCompat.Builder(getApplicationContext())
-                        .setContentIntent(pendingintent)
-                        .setSmallIcon(R.drawable.notificacion)
-                        .setContentTitle("Ritmo Cardiaco Bajo")
-                        .setContentText("El ritmo cardiaco esta fuera de los parametros")
-                        .setVibrate(new long[]{100, 250, 100, 500})
-                        .setAutoCancel(true);
-                notificacion.notify(4, mBuilder.build());
+                if (ruido==0) {
+
+
+
+                    mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                            .setContentIntent(pendingintent)
+                            .setSmallIcon(R.drawable.notificacion)
+                            .setContentTitle("Ritmo Cardiaco Bajo")
+                            .setContentText("El ritmo cardiaco esta fuera de los parametros")
+                            .setVibrate(new long[]{100, 250, 100, 500})
+                            .setAutoCancel(true);
+                    notificacion.notify(4, mBuilder.build());
+                }
+                else {
+                    edi_ppm.setText("Ruido");
+                }
             }
 
 
@@ -505,6 +518,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                         .setVibrate(new long[]{100, 250, 100, 500})
                         .setAutoCancel(true);
                 notificacion.notify(5, mBuilder.build());
+                edi_ppm.setText("Ruido");
 
             }
 
@@ -526,9 +540,31 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             }
 
 
+            if (ppm_actual<70){
+
+                if (ruido==0) {
 
 
-            if (temperatura_actual>temperatura_perso+.9){
+
+                    mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                            .setContentIntent(pendingintent)
+                            .setSmallIcon(R.drawable.notificacion)
+                            .setContentTitle("Ritmo Cardiaco Bajo")
+                            .setContentText("El ritmo cardiaco esta fuera de los parametros")
+                            .setVibrate(new long[]{100, 250, 100, 500})
+                            .setAutoCancel(true);
+                    notificacion.notify(4, mBuilder.build());
+                }
+                else {
+                    edi_ppm.setText("Ruido");
+                }
+            }
+
+
+
+
+
+            if (temperatura_actual>temperatura_perso+1.5){
 
                 mBuilder = new NotificationCompat.Builder(getApplicationContext())
                         .setContentIntent(pendingintent)
@@ -543,7 +579,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             }
 
 
-            if (temperatura_actual<temperatura_perso-.9){
+            if (temperatura_actual<temperatura_perso-1.5){
 
                 mBuilder = new NotificationCompat.Builder(getApplicationContext())
                         .setContentIntent(pendingintent)
@@ -569,6 +605,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                             .setVibrate(new long[]{100, 250, 100, 500})
                             .setAutoCancel(true);
                     notificacion.notify(8, mBuilder.build());
+                    edi_ppm.setText("Ruido");
 
                 }
 
@@ -580,14 +617,13 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
 
 
-                if (ppm_actual<85&&ppm_actual>75){
+                if (ppm_actual<85&&ppm_actual>70){
 
                     mBuilder = new NotificationCompat.Builder(getApplicationContext())
                             .setContentIntent(pendingintent)
                             .setSmallIcon(R.drawable.notificacion)
                             .setContentTitle("Dormido")
                             .setContentText("Su bebe esta dormido")
-                            .setVibrate(new long[]{100, 250, 100, 500})
                             .setAutoCancel(true);
                     notificacion.notify(9, mBuilder.build());
                     edi_sue.setText("Dormido");
@@ -611,7 +647,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
         }
 
-        if ( ppm_actual<85&&ppm_actual>75){
+        if ( ppm_actual<85&&ppm_actual>70){
             edi_sue.setText("Dormido");
         }
 
@@ -619,6 +655,20 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             edi_sue.setText("Despierto");
         }
 
+
+
+       /* if (ruido==1){
+            mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                    .setContentIntent(pendingintent)
+                    .setSmallIcon(R.drawable.notificacion)
+                    .setContentTitle("Ruido")
+                    .setContentText("Se a detectado mucho ruido")
+                    .setVibrate(new long[]{100, 250, 100, 500})
+                    .setAutoCancel(true);
+            notificacion.notify(5, mBuilder.build());
+            edi_ppm.setText("Ruido");
+
+        }*/
 
 
 
@@ -629,18 +679,25 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
     public void ritmo_alto(){
 
-        NotificationCompat.Builder mBuilder;
-        NotificationManager notificacion = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
-        PendingIntent pendingintent = PendingIntent.getActivity(MainActivity.this, 0, this.getIntent(), 0);
+        if(ruido==0) {
 
-        mBuilder = new NotificationCompat.Builder(getApplicationContext())
-                .setContentIntent(pendingintent)
-                .setSmallIcon(R.drawable.notificacion)
-                .setContentTitle("Ritmo Cardiaco Elevado")
-                .setContentText("El Ritmo cardiaco de su bebe esta arriba de los parametros")
-                .setVibrate(new long[]{100, 250, 100, 500})
-                .setAutoCancel(true);
-        notificacion.notify(10, mBuilder.build());
+            NotificationCompat.Builder mBuilder;
+            NotificationManager notificacion = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+            PendingIntent pendingintent = PendingIntent.getActivity(MainActivity.this, 0, this.getIntent(), 0);
+
+            mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                    .setContentIntent(pendingintent)
+                    .setSmallIcon(R.drawable.notificacion)
+                    .setContentTitle("Ritmo Cardiaco Elevado")
+                    .setContentText("El Ritmo cardiaco de su bebe esta arriba de los parametros")
+                    .setVibrate(new long[]{100, 250, 100, 500})
+                    .setAutoCancel(true);
+            notificacion.notify(10, mBuilder.build());
+       }
+
+        else{
+          edi_ppm.setText("Ruido");
+       }
 
     }
 
