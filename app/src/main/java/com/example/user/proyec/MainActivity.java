@@ -39,7 +39,8 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
     int años_bb, ppm_actual, perso, ppm_perso, not_ruido, not_sueño;
     float temperatura_actual, temperatura_perso;
-    int alarma_tempe=0,alarma_ppm=0,aux1=0,aux2=0;
+    int alarma_tempe = 0, alarma_ppm = 0, aux1 = 0, aux2 = 0;
+    boolean notifica;
 
     EditText edi_temp, edi_pos, edi_sue, edi_ppm;
     RequestQueue request;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
     /**
      * Funcion encargada de crear el menu superior en la interfaz
+     *
      * @param menu
      * @return
      */
@@ -64,12 +66,13 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
      * Existen 4 botones en la interfaz que al ser presionados hacen accion determinada
      * Mensaje, id mensa: hace una consulta de la base de datos interna para obtener la informacion
      * de la temperatura actual y las pulsaciones por minuto actuales para despues mandarse mediante un mensaje
-     *
+     * <p>
      * Configuracion, id config:se encarga de abrir la actividad de configuracion
-     *
+     * <p>
      * Estadisticasm id esta: se encarga de abrir la actividad de estadisticas
-     *
+     * <p>
      * Corazon, id cora: se encarga de abir la actividad principal (Datos tiempo real)
+     *
      * @param item
      * @return
      */
@@ -121,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
      * Funcion encargada de inicializar la pantalla principal y todos sus componetes, una vez
      * inicializado se llama a la funcion de cargar web service y se inicia un nuevo hilo para hacer las consultas
      * cada 30 segundos
+     *
      * @param savedInstanceState
      */
     @Override
@@ -145,12 +149,11 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         cursor.close();
         db.close();
 
-        if (id==0){
+        if (id == 0) {
             Intent i = new Intent(this, Primera.class);
             startActivity(i);
 
-        }
-    else {
+        } else {
 
 
             time time = new time();
@@ -191,11 +194,9 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         db.close();
 
 
-
-
-            String url = "http://simon-baby.com/bebe/consul_bebe.php?id=" + id;
-            jsonObjectR = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
-            request.add(jsonObjectR);
+        String url = "http://simon-baby.com/bebe/consul_bebe.php?id=" + id;
+        jsonObjectR = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        request.add(jsonObjectR);
 
     }
 
@@ -263,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         edi_temp.setText(misdatos.getTemp());
 
 
-        notificaciones();
+
 
         ruido = Integer.parseInt(misdatos.getRuido());
         ppm2 = Integer.parseInt(misdatos.getPpm2());
@@ -274,26 +275,34 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         dor = misdatos.getDor();
 
 
-
         switch (pos) {
             case "1":
                 edi_pos.setText("Boca Arriba");
+                notifica = true;
                 break;
             case "3":
                 edi_pos.setText("Acostado Lado Izquierdo");
 
+                notifica = true;
 
                 break;
             case "2":
                 edi_pos.setText("Acostado Lado Derecho");
+                notifica = true;
+
                 break;
             default:
                 edi_pos.setText("Sin Info");
+                edi_sue.setText("Sin Info");
+                notifica = false;
+
                 break;
         }
 
 
-
+        if (notifica==true){
+            notificaciones();
+        }
 
     }
 
@@ -343,12 +352,13 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     /**
      * Funcion encargada de usar los datos obtenidos del servidor para mandar notificaciones segun los
      * parametros que fueron ingresados en la interfaz de configuraciones
-     *
+     * <p>
      * En caso de que personalizacion este activada revisa si se desea recibir notificaciones de
      * sueño y de ruido y revisa los valores de personalizacion en caso de que algun valor recibido
      * salio de los parametros se lanza una notificacion con la descripcion
      */
     public void notificaciones() {
+
 
         Conexion_base conn = new Conexion_base(this, "bd", null, 1);
         SQLiteDatabase db = conn.getWritableDatabase();
@@ -375,7 +385,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         db.close();
 
 
-       // Toast.makeText(getBaseContext(),"Error"+Integer.toString(años_bb)+", "+Float.toString(temperatura_actual)+", "+Integer.toString(ppm_actual)+", "+Integer.toString(perso)+", "+Float.toString(temperatura_perso)+", "+Integer.toString(ppm_perso)+", "+Integer.toString(not_ruido)+", "+Integer.toString(not_sueño),Toast.LENGTH_LONG).show();
+        // Toast.makeText(getBaseContext(),"Error"+Integer.toString(años_bb)+", "+Float.toString(temperatura_actual)+", "+Integer.toString(ppm_actual)+", "+Integer.toString(perso)+", "+Float.toString(temperatura_perso)+", "+Integer.toString(ppm_perso)+", "+Integer.toString(not_ruido)+", "+Integer.toString(not_sueño),Toast.LENGTH_LONG).show();
 
 
         NotificationCompat.Builder mBuilder;
@@ -383,160 +393,150 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         PendingIntent pendingintent = PendingIntent.getActivity(MainActivity.this, 0, this.getIntent(), 0);
 
 
-        if (perso == 0) {
+
+            if (perso == 0) {
 
 
-            switch (años_bb){
+                switch (años_bb) {
 
-                case 0:
-                    if (ppm_actual>=165){
-                        ritmo_alto();
-
-                    }
-                    break;
-
-                case 1:
-                    if (ppm_actual>=135){
-                        ritmo_alto();
-
-                    }
-                    break;
-
-                case 2:
-                    if (ppm_actual>=125){
-                        ritmo_alto();
-
-                    }
-                    break;
-
-                case 3:
-                    if (ppm_actual>=125){
-                        ritmo_alto();
-
-                    }
-
-                    break;
-
-                case 4:
-
-                    if (ppm_actual>=125){
-                        ritmo_alto();
-
-                    }
-                    break;
-
-
-                    default:
-                        if (ppm_actual>=120){
+                    case 0:
+                        if (ppm_actual >= 165) {
                             ritmo_alto();
 
                         }
                         break;
 
-            }
+                    case 1:
+                        if (ppm_actual >= 135) {
+                            ritmo_alto();
 
-            if (ppm_actual<85&&ppm_actual>70){
+                        }
+                        break;
 
-                if (ruido==0) {
+                    case 2:
+                        if (ppm_actual >= 125) {
+                            ritmo_alto();
+
+                        }
+                        break;
+
+                    case 3:
+                        if (ppm_actual >= 125) {
+                            ritmo_alto();
+
+                        }
+
+                        break;
+
+                    case 4:
+
+                        if (ppm_actual >= 125) {
+                            ritmo_alto();
+
+                        }
+                        break;
+
+
+                    default:
+                        if (ppm_actual >= 120) {
+                            ritmo_alto();
+
+                        }
+                        break;
+
+                }
+
+                if (ppm_actual < 85 && ppm_actual > 70) {
+
+                    if (ruido == 0) {
+
+                        mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                                .setContentIntent(pendingintent)
+                                .setSmallIcon(R.drawable.notificacion)
+                                .setContentTitle("Dormido")
+                                .setContentText("Su bebe esta dormido")
+                                .setAutoCancel(true);
+                        notificacion.notify(1, mBuilder.build());
+                        edi_sue.setText("Dormido");
+                    } else {
+                        edi_ppm.setText("Ruido");
+                    }
+
+
+                } else {
+                    edi_sue.setText("Despierto");
+
+                }
+
+                if (temperatura_actual > 37.9) {
 
                     mBuilder = new NotificationCompat.Builder(getApplicationContext())
                             .setContentIntent(pendingintent)
                             .setSmallIcon(R.drawable.notificacion)
-                            .setContentTitle("Dormido")
-                            .setContentText("Su bebe esta dormido")
-                            .setAutoCancel(true);
-                    notificacion.notify(1, mBuilder.build());
-                    edi_sue.setText("Dormido");
-                }
-                else {
-                    edi_ppm.setText("Ruido");
-                }
-
-
-
-            }
-
-            else{
-                edi_sue.setText("Despierto");
-
-            }
-
-            if (temperatura_actual>37.9){
-
-                mBuilder = new NotificationCompat.Builder(getApplicationContext())
-                        .setContentIntent(pendingintent)
-                        .setSmallIcon(R.drawable.notificacion)
-                        .setContentTitle("Temperatura Alta")
-                        .setContentText("La temperatura esta fuera de los los parametros")
-                        .setVibrate(new long[]{100, 250, 100, 500})
-                        .setAutoCancel(true);
-                notificacion.notify(2, mBuilder.build());
-                alarma_tempe++;
-
-
-            }
-
-
-            if (temperatura_actual<36){
-
-                mBuilder = new NotificationCompat.Builder(getApplicationContext())
-                        .setContentIntent(pendingintent)
-                        .setSmallIcon(R.drawable.notificacion)
-                        .setContentTitle("Temperatura Baja")
-                        .setContentText("La temperatura esta fuera de los los parametros")
-                        .setVibrate(new long[]{100, 250, 100, 500})
-                        .setAutoCancel(true);
-                notificacion.notify(3, mBuilder.build());
-                alarma_tempe++;
-
-            }
-            if (ppm_actual<70){
-
-                if (ruido==0) {
-
-
-
-                    mBuilder = new NotificationCompat.Builder(getApplicationContext())
-                            .setContentIntent(pendingintent)
-                            .setSmallIcon(R.drawable.notificacion)
-                            .setContentTitle("Ritmo Cardiaco Bajo")
-                            .setContentText("El ritmo cardiaco esta fuera de los parametros")
+                            .setContentTitle("Temperatura Alta")
+                            .setContentText("La temperatura esta fuera de los los parametros")
                             .setVibrate(new long[]{100, 250, 100, 500})
                             .setAutoCancel(true);
-                    notificacion.notify(4, mBuilder.build());
-                    alarma_ppm++;
+                    notificacion.notify(2, mBuilder.build());
+                    alarma_tempe++;
+
+
                 }
-                else {
+
+
+                if (temperatura_actual < 36) {
+
+                    mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                            .setContentIntent(pendingintent)
+                            .setSmallIcon(R.drawable.notificacion)
+                            .setContentTitle("Temperatura Baja")
+                            .setContentText("La temperatura esta fuera de los los parametros")
+                            .setVibrate(new long[]{100, 250, 100, 500})
+                            .setAutoCancel(true);
+                    notificacion.notify(3, mBuilder.build());
+                    alarma_tempe++;
+
+                }
+                if (ppm_actual < 70) {
+
+                    if (ruido == 0) {
+
+
+                        mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                                .setContentIntent(pendingintent)
+                                .setSmallIcon(R.drawable.notificacion)
+                                .setContentTitle("Ritmo Cardiaco Bajo")
+                                .setContentText("El ritmo cardiaco esta fuera de los parametros")
+                                .setVibrate(new long[]{100, 250, 100, 500})
+                                .setAutoCancel(true);
+                        notificacion.notify(4, mBuilder.build());
+                        alarma_ppm++;
+                    } else {
+                        edi_ppm.setText("Ruido");
+                    }
+                }
+
+
+                if (ruido == 1) {
+                    mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                            .setContentIntent(pendingintent)
+                            .setSmallIcon(R.drawable.notificacion)
+                            .setContentTitle("Ruido")
+                            .setContentText("Se a detectado mucho ruido")
+                            .setVibrate(new long[]{100, 250, 100, 500})
+                            .setAutoCancel(true);
+                    notificacion.notify(5, mBuilder.build());
                     edi_ppm.setText("Ruido");
+
                 }
-            }
 
-
-
-            if (ruido==1){
-                mBuilder = new NotificationCompat.Builder(getApplicationContext())
-                        .setContentIntent(pendingintent)
-                        .setSmallIcon(R.drawable.notificacion)
-                        .setContentTitle("Ruido")
-                        .setContentText("Se a detectado mucho ruido")
-                        .setVibrate(new long[]{100, 250, 100, 500})
-                        .setAutoCancel(true);
-                notificacion.notify(5, mBuilder.build());
-                edi_ppm.setText("Ruido");
 
             }
 
 
+        if (perso == 1) {
 
-
-
-        }
-
-
-
-        if (perso==1){
-
-            if (ppm_actual>ppm_perso){
+            if (ppm_actual > ppm_perso) {
 
                 ritmo_alto();
 
@@ -544,10 +544,9 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             }
 
 
-            if (ppm_actual<70){
+            if (ppm_actual < 70) {
 
-                if (ruido==0) {
-
+                if (ruido == 0) {
 
 
                     mBuilder = new NotificationCompat.Builder(getApplicationContext())
@@ -559,17 +558,13 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                             .setAutoCancel(true);
                     notificacion.notify(4, mBuilder.build());
                     alarma_ppm++;
-                }
-                else {
+                } else {
                     edi_ppm.setText("Ruido");
                 }
             }
 
 
-
-
-
-            if (temperatura_actual>temperatura_perso+1.5){
+            if (temperatura_actual > temperatura_perso + 1.5) {
 
                 mBuilder = new NotificationCompat.Builder(getApplicationContext())
                         .setContentIntent(pendingintent)
@@ -585,7 +580,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             }
 
 
-            if (temperatura_actual<temperatura_perso-1.5){
+            if (temperatura_actual < temperatura_perso - 1.5) {
 
                 mBuilder = new NotificationCompat.Builder(getApplicationContext())
                         .setContentIntent(pendingintent)
@@ -600,10 +595,10 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             }
 
 
-            if (not_ruido==1){
+            if (not_ruido == 1) {
 
 
-                if (ruido==1){
+                if (ruido == 1) {
                     mBuilder = new NotificationCompat.Builder(getApplicationContext())
                             .setContentIntent(pendingintent)
                             .setSmallIcon(R.drawable.notificacion)
@@ -620,11 +615,10 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             }
 
 
-            if(not_sueño==1){
+            if (not_sueño == 1) {
 
 
-
-                if (ppm_actual<85&&ppm_actual>70){
+                if (ppm_actual < 85 && ppm_actual > 70) {
 
                     mBuilder = new NotificationCompat.Builder(getApplicationContext())
                             .setContentIntent(pendingintent)
@@ -636,29 +630,19 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                     edi_sue.setText("Dormido");
 
 
-
-                }
-
-                else {
+                } else {
                     edi_sue.setText("Despierto");
                 }
-
-
 
 
             }
 
 
-
-
-
         }
 
-        if ( ppm_actual<85&&ppm_actual>70){
+        if (ppm_actual < 85 && ppm_actual > 70) {
             edi_sue.setText("Dormido");
-        }
-
-        else {
+        } else {
             edi_sue.setText("Despierto");
         }
 
@@ -678,48 +662,46 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         }*/
 
 
-
         alarma_tempe();
         alarmas_ppm();
 
     }
 
 
-    public void alarma_tempe(){
+    public void alarma_tempe() {
 
-        if (alarma_tempe==1&&aux1==0){
-
-
-            Conexion_base conn = new Conexion_base(this, "bd", null, 1);
-            SQLiteDatabase db = conn.getWritableDatabase();
-            db.execSQL("UPDATE info set alarmas=alarmas+1 WHERE id=" + id);
-            db.close();
+            if (alarma_tempe == 1 && aux1 == 0) {
 
 
-            alarma_tempe++;
-            aux1=1;
+                Conexion_base conn = new Conexion_base(this, "bd", null, 1);
+                SQLiteDatabase db = conn.getWritableDatabase();
+                db.execSQL("UPDATE info set alarmas=alarmas+1 WHERE id=" + id);
+                db.close();
 
-        }
+
+                alarma_tempe++;
+                aux1 = 1;
+
+            }
 
 
+            if (alarma_tempe == 1 && aux1 == 1) {
+                alarma_tempe = 0;
+                aux1 = 0;
+            }
 
-        if (alarma_tempe==1&&aux1==1){
-            alarma_tempe=0;
-            aux1=0;
-        }
+            if (alarma_tempe >= 2 && aux1 == 1) {
+                alarma_tempe = 1;
+            }
 
-        if (alarma_tempe>=2&&aux1==1){
-            alarma_tempe=1;
-        }
 
 
     }
 
 
+    public void alarmas_ppm() {
 
-    public void alarmas_ppm(){
-
-        if (alarma_ppm==1&&aux2==0){
+        if (alarma_ppm == 1 && aux2 == 0) {
 
 
             Conexion_base conn = new Conexion_base(this, "bd", null, 1);
@@ -729,25 +711,24 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
 
             alarma_ppm++;
-            aux2=1;
+            aux2 = 1;
 
         }
 
 
-
-        if (alarma_ppm==1&&aux2==1){
-            alarma_ppm=0;
-            aux2=0;
+        if (alarma_ppm == 1 && aux2 == 1) {
+            alarma_ppm = 0;
+            aux2 = 0;
         }
 
-        if (alarma_ppm>=2&&aux2==1){
-            alarma_ppm=1;
+        if (alarma_ppm >= 2 && aux2 == 1) {
+            alarma_ppm = 1;
         }
-
-
 
 
     }
+
+
 
 
 

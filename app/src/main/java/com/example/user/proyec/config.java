@@ -477,6 +477,7 @@ public class config extends AppCompatActivity implements Response.Listener<JSONO
         Conexion_base conn = new Conexion_base(this, "bd", null, 1);
         SQLiteDatabase db = conn.getWritableDatabase();
         db.execSQL("UPDATE info set id=0,años=0,alarmas=0,tempe=0,ppm_mx=0,perso=0,tempe2=0,ppm_mx=0,not_rui=0,not_sue=0 WHERE id="+id);
+        db.execSQL("Delete from datos");
         db.close();
         reiniciar=false;
         Intent i = new Intent(this, Primera.class);
