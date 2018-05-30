@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
     int años_bb, ppm_actual, perso, ppm_perso, not_ruido, not_sueño;
     float temperatura_actual, temperatura_perso;
+    int alarma_tempe=0,alarma_ppm=0,aux1=0,aux2=0;
 
     EditText edi_temp, edi_pos, edi_sue, edi_ppm;
     RequestQueue request;
@@ -470,6 +471,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                         .setVibrate(new long[]{100, 250, 100, 500})
                         .setAutoCancel(true);
                 notificacion.notify(2, mBuilder.build());
+                alarma_tempe++;
 
 
             }
@@ -485,6 +487,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                         .setVibrate(new long[]{100, 250, 100, 500})
                         .setAutoCancel(true);
                 notificacion.notify(3, mBuilder.build());
+                alarma_tempe++;
 
             }
             if (ppm_actual<70){
@@ -501,6 +504,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                             .setVibrate(new long[]{100, 250, 100, 500})
                             .setAutoCancel(true);
                     notificacion.notify(4, mBuilder.build());
+                    alarma_ppm++;
                 }
                 else {
                     edi_ppm.setText("Ruido");
@@ -554,6 +558,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                             .setVibrate(new long[]{100, 250, 100, 500})
                             .setAutoCancel(true);
                     notificacion.notify(4, mBuilder.build());
+                    alarma_ppm++;
                 }
                 else {
                     edi_ppm.setText("Ruido");
@@ -574,6 +579,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                         .setVibrate(new long[]{100, 250, 100, 500})
                         .setAutoCancel(true);
                 notificacion.notify(6, mBuilder.build());
+                alarma_tempe++;
 
 
             }
@@ -589,6 +595,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                         .setVibrate(new long[]{100, 250, 100, 500})
                         .setAutoCancel(true);
                 notificacion.notify(7, mBuilder.build());
+                alarma_tempe++;
 
             }
 
@@ -672,6 +679,74 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
 
 
+        alarma_tempe();
+        alarmas_ppm();
+
+    }
+
+
+    public void alarma_tempe(){
+
+        if (alarma_tempe==1&&aux1==0){
+
+
+            Conexion_base conn = new Conexion_base(this, "bd", null, 1);
+            SQLiteDatabase db = conn.getWritableDatabase();
+            db.execSQL("UPDATE info set alarmas=alarmas+1 WHERE id=" + id);
+            db.close();
+
+
+            alarma_tempe++;
+            aux1=1;
+
+        }
+
+
+
+        if (alarma_tempe==1&&aux1==1){
+            alarma_tempe=0;
+            aux1=0;
+        }
+
+        if (alarma_tempe>=2&&aux1==1){
+            alarma_tempe=1;
+        }
+
+
+    }
+
+
+
+    public void alarmas_ppm(){
+
+        if (alarma_ppm==1&&aux2==0){
+
+
+            Conexion_base conn = new Conexion_base(this, "bd", null, 1);
+            SQLiteDatabase db = conn.getWritableDatabase();
+            db.execSQL("UPDATE info set alarmas=alarmas+1 WHERE id=" + id);
+            db.close();
+
+
+            alarma_ppm++;
+            aux2=1;
+
+        }
+
+
+
+        if (alarma_ppm==1&&aux2==1){
+            alarma_ppm=0;
+            aux2=0;
+        }
+
+        if (alarma_ppm>=2&&aux2==1){
+            alarma_ppm=1;
+        }
+
+
+
+
     }
 
 
@@ -693,6 +768,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                     .setVibrate(new long[]{100, 250, 100, 500})
                     .setAutoCancel(true);
             notificacion.notify(10, mBuilder.build());
+            alarma_ppm++;
        }
 
         else{
