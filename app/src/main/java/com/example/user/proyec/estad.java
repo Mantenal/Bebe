@@ -3,6 +3,7 @@ package com.example.user.proyec;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,6 +16,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.user.proyec.entidades.Datos;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.text.DecimalFormat;
 
@@ -117,6 +122,7 @@ public class estad extends AppCompatActivity {
         temp_prom=findViewById(R.id.Text_Prom_Temp);
         ppm_prom=findViewById(R.id.Text_prom_ppm);
         num_alar=findViewById(R.id.Text_Alarm);
+        GraphView graph = findViewById(R.id.graph);
 
 
         Conexion_base conn=new Conexion_base(this,"bd",null,1);
@@ -136,8 +142,81 @@ public class estad extends AppCompatActivity {
       num_alar.setText(Integer.toString(alar));
 
 
+      /* GraphView graph = (GraphView) findViewById(R.id.graph);
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
+                new DataPoint(0, 1),
+                new DataPoint(1, 5),
+                new DataPoint(2, 3)
+        });
+        graph.addSeries(series);*/
+
+        initGraph(graph);
+
+
 
     }
+
+
+
+    public void initGraph(GraphView graph) {
+        // first series
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
+                new DataPoint(0, 90),
+                new DataPoint(1, 110),
+                new DataPoint(2, 75),
+                new DataPoint(3, 90),
+                new DataPoint(4, 90),
+                new DataPoint(5, 110),
+                new DataPoint(6, 75),
+                new DataPoint(7, 90),
+                new DataPoint(8, 91)
+        });
+        series.setTitle("PPM.");
+        graph.addSeries(series);
+
+
+
+        // second series
+        LineGraphSeries<DataPoint> series2 = new LineGraphSeries<>(new DataPoint[] {
+                new DataPoint(0, 33),
+                new DataPoint(1, 38),
+                new DataPoint(2, 37),
+                new DataPoint(3, 34),
+                new DataPoint(4, 39),
+                new DataPoint(5, 35),
+                new DataPoint(6, 34),
+                new DataPoint(7, 36),
+                new DataPoint(8, 38)
+        });
+        series2.setTitle("Temp.");
+        series2.setDrawBackground(true);
+        series2.setColor(Color.argb(255, 255, 60, 60));
+        series2.setBackgroundColor(Color.argb(100, 204, 119, 119));
+        series2.setDrawDataPoints(true);
+        graph.addSeries(series2);
+
+
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMinY(0);
+        graph.getViewport().setMaxY(190);
+
+
+
+        // enable scaling
+        graph.getViewport().setScalable(true);
+        graph.getViewport().setScalableY(true);
+
+
+        // legend
+        graph.getLegendRenderer().setVisible(true);
+        graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+
+
+    }
+
+
+
+
 
     /**
      * Saca el valor en dos decimales de temperatura
